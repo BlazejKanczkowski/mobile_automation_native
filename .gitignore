@@ -1,0 +1,24 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# Systemowe
+.DS_Store
+
+# Test config files
+*.properties
+*.log
+
+# OS/CI/Temp
+*.swp
+*.tmp
+*.bak
+*.class
+*.pid
+*.lock
