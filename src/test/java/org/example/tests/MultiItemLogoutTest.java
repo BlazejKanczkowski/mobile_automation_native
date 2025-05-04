@@ -21,7 +21,6 @@ public class MultiItemLogoutTest extends BaseTest {
         List<String> products = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
         productPage.addProductsToCart(products);
 
-
         Assert.assertEquals(productPage.getCartCount(), products.size(), "Cart badge does not match number of added products.");
 
         MenuPageBase menuPage = initPage(getDriver(), MenuPageBase.class);
@@ -30,5 +29,5 @@ public class MultiItemLogoutTest extends BaseTest {
         LoginPageBase loginPageAfterLogout = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterLogout.isPageOpened(), "Not redirected to login after logout.");
     }
-
+    //DONE
 }

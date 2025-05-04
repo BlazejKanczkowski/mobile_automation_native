@@ -35,6 +35,13 @@ public class ProductPage extends ProductPageBase {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
     private List<ProductListItemComponent> productItems;
 
+    @AndroidFindBy(accessibility = "test-Item title")
+    private ExtendedWebElement detailsTitle;
+
+    @AndroidFindBy(accessibility = "test-Toggle")
+    private ExtendedWebElement switchViewButton;
+
+
     public ProductPage(WebDriver driver) {
         super(driver);
     }
@@ -80,7 +87,7 @@ public class ProductPage extends ProductPageBase {
     @Override
     public void addProductToCartByName(String productName) {
         productItems.stream()
-                .filter(p -> p.getItemName().equalsIgnoreCase(productName))
+                .filter(p -> normalize(p.getItemName()).contains(normalize(productName)))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickAddToCart);
     }
@@ -99,5 +106,35 @@ public class ProductPage extends ProductPageBase {
     @Override
     public void addProductsToCart(List<String> names) {
         names.forEach(this::addProductToCartByName);
+    }
+
+    @Override
+    public void switchView() {
+        if (switchViewButton.isElementPresent()) {
+            switchViewButton.click();
+            pause(1);
+        } else {
+            throw new RuntimeException("Switch view button not found!");
+        }
+    }
+
+    @Override
+    public void openProductDetails(String productName) {
+        productItems.stream()
+                .filter(p -> p.getItemName().equalsIgnoreCase(productName))
+                .findFirst()
+                .ifPresent(item -> {
+                    item.clickItemName();
+                    pause(1);
+                });
+    }
+
+    @Override
+    public boolean isDetailsPageOpened() {
+        return detailsTitle.isElementPresent();
+    }
+
+    private String normalize(String name) {
+        return name.trim().toLowerCase();
     }
 }

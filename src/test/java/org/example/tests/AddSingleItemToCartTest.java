@@ -20,4 +20,5 @@ public class AddSingleItemToCartTest extends BaseTest {
 
         Assert.assertEquals(cartCount, 1, "Cart badge count should be 1 after adding one product.");
     }
+    //DONE
 }

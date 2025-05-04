@@ -24,4 +24,5 @@ public class ItemCountTest extends BaseTest {
 
         Assert.assertEquals(countAfter, countBefore, "Number of products changed after sort.");
     }
+    //DONE
 }

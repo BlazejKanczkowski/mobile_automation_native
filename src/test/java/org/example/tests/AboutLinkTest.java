@@ -27,4 +27,5 @@ public class AboutLinkTest extends BaseTest {
 
         Assert.assertTrue(true, "About page opened – verified manually or via context.");
     }
+    //DONE
 }

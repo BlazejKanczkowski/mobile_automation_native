@@ -24,4 +24,5 @@ public class LogoutTest extends BaseTest {
         LoginPageBase loginPageAfterLogout = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterLogout.isPageOpened(), "Login page not shown after logout.");
     }
+    //DONE
 }

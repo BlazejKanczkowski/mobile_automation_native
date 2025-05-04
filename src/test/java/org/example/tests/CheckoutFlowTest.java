@@ -24,11 +24,11 @@ public class CheckoutFlowTest extends BaseTest {
         Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
 
         CartPageBase cartPage = productPage.clickCartIcon();
+        //to do
         MobileScrollUtil.scrollDownMultipleTimes(getDriver(), 2);
         Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
 
         CheckoutPageBase checkoutPage = cartPage.clickCheckout();
-
 
         checkoutPage.fillForm("User", "LastName", "12345");
         checkoutPage.finishOrder();

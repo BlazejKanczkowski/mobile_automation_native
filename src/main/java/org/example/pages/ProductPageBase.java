@@ -25,4 +25,10 @@ public abstract class ProductPageBase extends BasePage {
     public abstract void addProductsToCart(List<String> productNames);
 
     public abstract List<String> getDisplayedProductNames();
+
+    public abstract void switchView();
+
+    public abstract void openProductDetails(String productName);
+
+    public abstract boolean isDetailsPageOpened();
 }

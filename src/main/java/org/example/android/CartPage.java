@@ -2,16 +2,11 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.android.AndroidDriver;
 import org.example.pages.CartPageBase;
 import org.example.pages.CheckoutPageBase;
 import org.example.utils.MobileScrollUtil;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.time.Duration;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class CartPage extends CartPageBase {

@@ -20,8 +20,9 @@ public class ReopenAppLogoutTest extends BaseTest {
         WebDriver driver = getDriver();
 
         if (driver instanceof AndroidDriver) {
-            ((AndroidDriver) driver).closeApp(); //simulate close
-            ((AndroidDriver) driver).launchApp(); //simulate open
+            String appPackage = "com.swaglabsmobileapp";
+            ((AndroidDriver) driver).terminateApp(appPackage);
+            ((AndroidDriver) driver).activateApp(appPackage);
         } else {
             Assert.fail("Not an AndroidDriver – cannot simulate app restart.");
         }
@@ -29,4 +30,5 @@ public class ReopenAppLogoutTest extends BaseTest {
         LoginPageBase loginPageAfterRestart = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterRestart.isPageOpened(), "User is still logged in after reopening the app.");
     }
+    //TO DO
 }

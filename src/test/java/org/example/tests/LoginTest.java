@@ -17,4 +17,5 @@ public class LoginTest extends BaseTest {
         ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
         Assert.assertTrue(productPage.isProductListVisible(), "Product list is not visible – login might have failed.");
     }
+    // DONE
 }

@@ -32,7 +32,7 @@ public class SortOptionsTest extends BaseTest {
                 } else {
                     expectedPrices.sort(Collections.reverseOrder());
                 }
-
+                //just for debug purpose
                 System.out.println("[DEBUG] Prices actual:   " + actualPrices);
                 System.out.println("[DEBUG] Prices expected: " + expectedPrices);
 
@@ -48,7 +48,7 @@ public class SortOptionsTest extends BaseTest {
                 } else {
                     expectedNames.sort(Collections.reverseOrder(String.CASE_INSENSITIVE_ORDER));
                 }
-
+                //just for debug purpose
                 System.out.println("[DEBUG] Names actual:   " + actualNames);
                 System.out.println("[DEBUG] Names expected: " + expectedNames);
 

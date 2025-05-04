@@ -36,8 +36,11 @@ public class ProductListItemComponent extends AbstractUIObject {
         return Double.parseDouble(text.replace("$", "").trim());
     }
 
-
     public void clickAddToCart() {
         addToCartButton.click();
+    }
+
+    public void clickItemName() {
+        itemName.click();
     }
 }
