@@ -23,4 +23,6 @@ public abstract class ProductPageBase extends BasePage {
     public abstract void addProductToCartByName(String productName);
 
     public abstract void addProductsToCart(List<String> productNames);
+
+    public abstract List<String> getDisplayedProductNames();
 }

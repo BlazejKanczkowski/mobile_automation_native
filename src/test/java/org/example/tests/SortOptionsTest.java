@@ -21,20 +21,39 @@ public class SortOptionsTest extends BaseTest {
 
         for (SortOption option : SortOption.values()) {
             productPage.sortBy(option);
-            List<Double> prices = productPage.getDisplayedPrices();
-
-            Assert.assertFalse(prices.isEmpty(), "Prices not visible after sorting: " + option);
 
             if (option == SortOption.PRICE_LOW_TO_HIGH || option == SortOption.PRICE_HIGH_TO_LOW) {
-                List<Double> expected = new ArrayList<>(prices);
+                List<Double> actualPrices = productPage.getDisplayedPrices();
+                Assert.assertFalse(actualPrices.isEmpty(), "Prices not visible after sorting: " + option);
+
+                List<Double> expectedPrices = new ArrayList<>(actualPrices);
                 if (option == SortOption.PRICE_LOW_TO_HIGH) {
-                    expected.sort(Double::compareTo);
+                    expectedPrices.sort(Double::compareTo);
                 } else {
-                    expected.sort(Collections.reverseOrder());
+                    expectedPrices.sort(Collections.reverseOrder());
                 }
-                Assert.assertEquals(prices, expected, "Prices not sorted correctly for: " + option);
+
+                System.out.println("[DEBUG] Prices actual:   " + actualPrices);
+                System.out.println("[DEBUG] Prices expected: " + expectedPrices);
+
+                Assert.assertEquals(actualPrices, expectedPrices, "Prices not sorted correctly for: " + option);
+
+            } else if (option == SortOption.NAME_A_TO_Z || option == SortOption.NAME_Z_TO_A) {
+                List<String> actualNames = productPage.getDisplayedProductNames();
+                Assert.assertFalse(actualNames.isEmpty(), "Product names list is empty after sorting: " + option);
+
+                List<String> expectedNames = new ArrayList<>(actualNames);
+                if (option == SortOption.NAME_A_TO_Z) {
+                    expectedNames.sort(String::compareToIgnoreCase);
+                } else {
+                    expectedNames.sort(Collections.reverseOrder(String.CASE_INSENSITIVE_ORDER));
+                }
+
+                System.out.println("[DEBUG] Names actual:   " + actualNames);
+                System.out.println("[DEBUG] Names expected: " + expectedNames);
+
+                Assert.assertEquals(actualNames, expectedNames, "Names not sorted correctly for: " + option);
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ package org.example.tests;
 import org.example.enums.UserCredentials;
 import org.example.pages.*;
 import org.example.utils.BaseTest;
+import org.example.utils.MobileScrollUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,9 +24,12 @@ public class CheckoutFlowTest extends BaseTest {
         Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
 
         CartPageBase cartPage = productPage.clickCartIcon();
+        MobileScrollUtil.scrollDownMultipleTimes(getDriver(), 2);
         Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
 
         CheckoutPageBase checkoutPage = cartPage.clickCheckout();
+
+
         checkoutPage.fillForm("User", "LastName", "12345");
         checkoutPage.finishOrder();
 

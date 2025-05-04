@@ -2,19 +2,19 @@ package org.example.android.components;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 public class ProductListItemComponent extends AbstractUIObject {
 
-    @FindBy(xpath = ".//android.widget.TextView[@content-desc='test-Item title']")
+    @AndroidFindBy(accessibility = "test-Item title")
     private ExtendedWebElement itemName;
 
-    @FindBy(xpath = ".//android.widget.TextView[@content-desc='test-Price']")
+    @AndroidFindBy(accessibility = "test-Price")
     private ExtendedWebElement price;
 
-    @FindBy(xpath = ".//android.view.ViewGroup[@content-desc='test-ADD TO CART']")
+    @AndroidFindBy(accessibility = "test-ADD TO CART")
     private ExtendedWebElement addToCartButton;
 
     public ProductListItemComponent(WebDriver driver, SearchContext searchContext) {
@@ -26,8 +26,16 @@ public class ProductListItemComponent extends AbstractUIObject {
     }
 
     public double getItemPrice() {
-        return Double.parseDouble(price.getText().replace("$", "").trim());
+        if (!price.isElementPresent()) {
+            System.out.println("[DEBUG] Price element not present for item: " + getItemName());
+            return -1.0;
+        }
+
+        String text = price.getText();
+        System.out.println("[DEBUG] Price raw text: " + text);
+        return Double.parseDouble(text.replace("$", "").trim());
     }
+
 
     public void clickAddToCart() {
         addToCartButton.click();

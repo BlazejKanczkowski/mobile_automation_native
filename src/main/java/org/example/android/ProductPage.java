@@ -2,14 +2,12 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.android.components.ProductListItemComponent;
 import org.example.enums.SortOption;
 import org.example.pages.CartPageBase;
 import org.example.pages.ProductPageBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,23 +15,25 @@ import java.util.stream.Collectors;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductPageBase.class)
 public class ProductPage extends ProductPageBase {
 
-    @FindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
-    private ExtendedWebElement pageTitle;
-
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']")
+    @AndroidFindBy(accessibility = "test-Cart")
     private ExtendedWebElement cartIcon;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.TextView")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.TextView")
     private ExtendedWebElement cartBadge;
 
-    @FindBy(xpath = "//android.widget.Spinner[@content-desc='test-Modal Selector']")
+    @AndroidFindBy(accessibility = "test-Modal Selector Button")
     private ExtendedWebElement sortDropdown;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
-    private List<ProductListItemComponent> productItems;
-
-    @FindBy(xpath = "//android.widget.CheckedTextView")
+    @AndroidFindBy(
+            xpath = "//android.widget.ScrollView//android.widget.TextView[not(contains(@text,'Sort items')) and not(contains(@text,'Cancel'))]"
+    )
     private List<ExtendedWebElement> sortOptions;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
+    private ExtendedWebElement pageTitle;
+
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
+    private List<ProductListItemComponent> productItems;
 
     public ProductPage(WebDriver driver) {
         super(driver);
@@ -46,36 +46,28 @@ public class ProductPage extends ProductPageBase {
 
     @Override
     public boolean isProductListVisible() {
-        return pageTitle.isElementPresent();
+        return isPageOpened();
     }
 
     @Override
     public void sortBy(SortOption option) {
         sortDropdown.click();
-
+        pause(1);
         for (ExtendedWebElement opt : sortOptions) {
             if (opt.getText().equalsIgnoreCase(option.getVisibleText())) {
                 opt.click();
+                pause(1);
                 return;
             }
         }
-
-        throw new RuntimeException("Sort option not found: " + option.getVisibleText());
+        throw new RuntimeException("Sort option not found: " + option);
     }
 
     @Override
-    public CartPageBase clickCartIcon() {
-        cartIcon.click();
-        return initPage(getDriver(), CartPageBase.class);
-    }
-
-    @Override
-    public int getCartCount() {
-        if (cartBadge.isElementPresent()) {
-            return Integer.parseInt(cartBadge.getText());
-        } else {
-            return 0;
-        }
+    public List<String> getDisplayedProductNames() {
+        return productItems.stream()
+                .map(ProductListItemComponent::getItemName)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -87,18 +79,25 @@ public class ProductPage extends ProductPageBase {
 
     @Override
     public void addProductToCartByName(String productName) {
-        for (ProductListItemComponent product : productItems) {
-            if (product.getItemName().equalsIgnoreCase(productName)) {
-                product.clickAddToCart();
-                break;
-            }
-        }
+        productItems.stream()
+                .filter(p -> p.getItemName().equalsIgnoreCase(productName))
+                .findFirst()
+                .ifPresent(ProductListItemComponent::clickAddToCart);
     }
 
     @Override
-    public void addProductsToCart(List<String> productNames) {
-        for (String name : productNames) {
-            addProductToCartByName(name);
-        }
+    public CartPageBase clickCartIcon() {
+        cartIcon.click();
+        return initPage(getDriver(), CartPageBase.class);
+    }
+
+    @Override
+    public int getCartCount() {
+        return cartBadge.isElementPresent() ? Integer.parseInt(cartBadge.getText()) : 0;
+    }
+
+    @Override
+    public void addProductsToCart(List<String> names) {
+        names.forEach(this::addProductToCartByName);
     }
 }
