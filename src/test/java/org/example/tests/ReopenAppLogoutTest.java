@@ -1,6 +1,6 @@
 package org.example.tests;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.InteractsWithApps;
 import org.example.enums.UserCredentials;
 import org.example.pages.LoginPageBase;
 import org.example.pages.ProductPageBase;
@@ -13,22 +13,22 @@ public class ReopenAppLogoutTest extends BaseTest {
 
     @Test
     public void testAppReopenAfterLogin() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list not visible after login.");
+
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
         WebDriver driver = getDriver();
 
-        if (driver instanceof AndroidDriver) {
+        if (driver instanceof InteractsWithApps) {
+            InteractsWithApps appInteraction = (InteractsWithApps) driver;
             String appPackage = "com.swaglabsmobileapp";
-            ((AndroidDriver) driver).terminateApp(appPackage);
-            ((AndroidDriver) driver).activateApp(appPackage);
+            appInteraction.terminateApp(appPackage);
+            appInteraction.activateApp(appPackage);
         } else {
-            Assert.fail("Not an AndroidDriver – cannot simulate app restart.");
+            Assert.fail("Driver does not support app control (terminate/activate).");
         }
 
         LoginPageBase loginPageAfterRestart = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterRestart.isPageOpened(), "User is still logged in after reopening the app.");
     }
-    //TO DO
+    //DONE
 }

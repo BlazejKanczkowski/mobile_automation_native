@@ -8,13 +8,13 @@ import org.openqa.selenium.WebDriver;
 
 public class ProductListItemComponent extends AbstractUIObject {
 
-    @AndroidFindBy(accessibility = "test-Item title")
+    @AndroidFindBy(xpath = ".//*[@content-desc='test-Item title']")
     private ExtendedWebElement itemName;
 
-    @AndroidFindBy(accessibility = "test-Price")
+    @AndroidFindBy(xpath = ".//*[@content-desc='test-Price']")
     private ExtendedWebElement price;
 
-    @AndroidFindBy(accessibility = "test-ADD TO CART")
+    @AndroidFindBy(xpath = ".//android.view.ViewGroup[@content-desc='test-ADD TO CART']")
     private ExtendedWebElement addToCartButton;
 
     public ProductListItemComponent(WebDriver driver, SearchContext searchContext) {
@@ -27,12 +27,10 @@ public class ProductListItemComponent extends AbstractUIObject {
 
     public double getItemPrice() {
         if (!price.isElementPresent()) {
-            System.out.println("[DEBUG] Price element not present for item: " + getItemName());
             return -1.0;
         }
 
         String text = price.getText();
-        System.out.println("[DEBUG] Price raw text: " + text);
         return Double.parseDouble(text.replace("$", "").trim());
     }
 

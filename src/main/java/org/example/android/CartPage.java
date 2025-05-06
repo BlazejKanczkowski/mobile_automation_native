@@ -2,16 +2,17 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.pages.CartPageBase;
 import org.example.pages.CheckoutPageBase;
 import org.example.utils.MobileScrollUtil;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class CartPage extends CartPageBase {
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CHECKOUT']")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CHECKOUT']")
     private ExtendedWebElement checkoutButton;
 
     public CartPage(WebDriver driver) {
@@ -29,7 +30,7 @@ public class CartPage extends CartPageBase {
         int scrollCount = 0;
 
         while (!checkoutButton.isVisible() && scrollCount < maxScrolls) {
-            MobileScrollUtil.scrollDownMultipleTimes(getDriver(), 1);
+            MobileScrollUtil.scrollDownMultipleTimes((AppiumDriver) getDriver(), 1);
             scrollCount++;
         }
 
@@ -40,5 +41,10 @@ public class CartPage extends CartPageBase {
     @Override
     public boolean isPageOpen() {
         return checkoutButton.isElementPresent();
+    }
+
+    @Override
+    public ExtendedWebElement getCheckoutButton() {
+        return checkoutButton;
     }
 }

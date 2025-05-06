@@ -1,5 +1,7 @@
 package org.example.tests;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import org.example.enums.UserCredentials;
 import org.example.pages.*;
 import org.example.utils.BaseTest;
@@ -24,8 +26,10 @@ public class CheckoutFlowTest extends BaseTest {
         Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
 
         CartPageBase cartPage = productPage.clickCartIcon();
-        //to do
-        MobileScrollUtil.scrollDownMultipleTimes(getDriver(), 2);
+
+        AppiumDriver driver = (AppiumDriver) getDriver();
+        MobileScrollUtil.scrollToElementWithDescription(driver, "test-CHECKOUT");
+
         Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
 
         CheckoutPageBase checkoutPage = cartPage.clickCheckout();

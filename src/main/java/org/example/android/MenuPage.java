@@ -2,20 +2,20 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.pages.MenuPageBase;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = MenuPageBase.class)
 public class MenuPage extends MenuPageBase {
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Menu']/android.view.ViewGroup/android.widget.ImageView")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Menu']/android.view.ViewGroup/android.widget.ImageView")
     private ExtendedWebElement menuButton;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-ABOUT']")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-ABOUT']")
     private ExtendedWebElement aboutOption;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-LOGOUT']")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-LOGOUT']")
     private ExtendedWebElement logoutOption;
 
     public MenuPage(WebDriver driver) {

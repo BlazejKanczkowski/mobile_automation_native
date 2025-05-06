@@ -1,45 +1,32 @@
 package org.example.utils;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.PointerInput;
-import org.openqa.selenium.interactions.Sequence;
+import io.appium.java_client.AppiumBy;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
+import java.util.HashMap;
 
 public class MobileScrollUtil {
 
-    public static void scrollDownMultipleTimes(WebDriver webDriver, int times) {
-        AppiumDriver driver = (AppiumDriver) webDriver;
-        Dimension size = driver.manage().window().getSize();
+    public static void scrollToElementWithDescription(AppiumDriver driver, String description) {
+        String uiScrollables = "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView("
+                + "new UiSelector().description(\"" + description + "\"));";
+        driver.findElement(AppiumBy.androidUIAutomator(uiScrollables));
+    }
 
-        int width = size.width;
-        int height = size.height;
+    public static void scrollDown(AppiumDriver driver) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("direction", "down");
+        params.put("percent", 1.0);
+        params.put("left", 100);
+        params.put("top", 100);
+        params.put("width", 600);
+        params.put("height", 800);
+        driver.executeScript("mobile: scrollGesture", params);
+    }
 
-        int startX = width / 2;
-        int startY = (int) (height * 0.8);
-        int endY = (int) (height * 0.2);
-
-        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
-
+    public static void scrollDownMultipleTimes(AppiumDriver driver, int times) {
         for (int i = 0; i < times; i++) {
-            Sequence swipe = new Sequence(finger, 1);
-            swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startX, startY));
-            swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-            swipe.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), startX, endY));
-            swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-
-            List<Sequence> actions = new ArrayList<>();
-            actions.add(swipe);
-            driver.perform(actions);
+            scrollDown(driver);
         }
     }
 }

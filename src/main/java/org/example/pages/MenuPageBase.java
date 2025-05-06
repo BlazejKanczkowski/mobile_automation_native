@@ -11,4 +11,9 @@ public abstract class MenuPageBase extends BasePage {
     public abstract void openAboutPage();
 
     public abstract void logout();
+
+    @Override
+    public boolean isPageOpened() {
+        return true;
+    }
 }

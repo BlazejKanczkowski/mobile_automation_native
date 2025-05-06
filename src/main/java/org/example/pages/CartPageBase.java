@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
 public abstract class CartPageBase extends BasePage {
@@ -13,4 +14,6 @@ public abstract class CartPageBase extends BasePage {
     public abstract CheckoutPageBase clickCheckout();
 
     public abstract boolean isPageOpen();
+
+    public abstract ExtendedWebElement getCheckoutButton();
 }

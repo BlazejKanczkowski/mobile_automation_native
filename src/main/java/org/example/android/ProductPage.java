@@ -32,11 +32,11 @@ public class ProductPage extends ProductPageBase {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private ExtendedWebElement pageTitle;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Item']")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[contains(@content-desc, 'test-Item')]")
     private List<ProductListItemComponent> productItems;
 
-    @AndroidFindBy(accessibility = "test-Item title")
-    private ExtendedWebElement detailsTitle;
+    @AndroidFindBy(xpath = "//android.widget.ScrollView//android.widget.TextView[contains(@text, '.')]")
+    private ExtendedWebElement detailsDescription;
 
     @AndroidFindBy(accessibility = "test-Toggle")
     private ExtendedWebElement switchViewButton;
@@ -105,7 +105,9 @@ public class ProductPage extends ProductPageBase {
 
     @Override
     public void addProductsToCart(List<String> names) {
-        names.forEach(this::addProductToCartByName);
+        for (String name : names) {
+            addProductToCartByName(name);
+        }
     }
 
     @Override
@@ -131,7 +133,7 @@ public class ProductPage extends ProductPageBase {
 
     @Override
     public boolean isDetailsPageOpened() {
-        return detailsTitle.isElementPresent();
+        return detailsDescription.isElementPresent();
     }
 
     private String normalize(String name) {

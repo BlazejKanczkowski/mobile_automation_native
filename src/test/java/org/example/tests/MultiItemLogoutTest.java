@@ -15,6 +15,7 @@ public class MultiItemLogoutTest extends BaseTest {
 
     @Test
     public void testAddMultipleItemsThenLogout() {
+
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
 
@@ -29,5 +30,4 @@ public class MultiItemLogoutTest extends BaseTest {
         LoginPageBase loginPageAfterLogout = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterLogout.isPageOpened(), "Not redirected to login after logout.");
     }
-    //DONE
 }
