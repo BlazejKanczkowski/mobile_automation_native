@@ -1,11 +1,8 @@
 package org.example.tests;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import org.example.enums.UserCredentials;
 import org.example.pages.*;
 import org.example.utils.BaseTest;
-import org.example.utils.MobileScrollUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,27 +13,25 @@ public class CheckoutFlowTest extends BaseTest {
 
     @Test
     public void testCompleteCheckoutWithMultipleItems() {
+
         List<String> products = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
 
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product page not loaded.");
+        getLoginPage().login(UserCredentials.STANDARD_USER);
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not loaded.");
 
-        productPage.addProductsToCart(products);
-        Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
 
-        CartPageBase cartPage = productPage.clickCartIcon();
+        getProductPage().addProductsToCart(products);
+        Assert.assertEquals(getProductPage().getCartCount(), products.size(), "Incorrect cart badge count.");
+        getProductPage().clickCartIcon();
+        getCartPage().scrollToCheckoutButton();
+        Assert.assertTrue(getCartPage().isCheckoutButtonPresent(), "Checkout button not found.");
 
-        AppiumDriver driver = (AppiumDriver) getDriver();
-        MobileScrollUtil.scrollToElementWithDescription(driver, "test-CHECKOUT");
+        getCartPage().clickCheckout();
 
-        Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
+        getCheckoutPage().fillForm("User", "LastName", "12345");
+        getCheckoutPage().scrollToFinishButton();
+        getCheckoutPage().finishOrder();
 
-        CheckoutPageBase checkoutPage = cartPage.clickCheckout();
-
-        checkoutPage.fillForm("User", "LastName", "12345");
-        checkoutPage.finishOrder();
-
-        Assert.assertTrue(checkoutPage.isConfirmationDisplayed(), "Order confirmation not visible.");
+        Assert.assertTrue(getCheckoutPage().isConfirmationDisplayed(), "Order confirmation not visible.");
     }
 }

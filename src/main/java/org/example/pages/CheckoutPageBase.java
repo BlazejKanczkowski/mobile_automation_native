@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
 public abstract class CheckoutPageBase extends BasePage {
@@ -13,4 +14,9 @@ public abstract class CheckoutPageBase extends BasePage {
     public abstract void finishOrder();
 
     public abstract boolean isConfirmationDisplayed();
+
+    public abstract ExtendedWebElement getFinishButton();
+
+    public abstract void scrollToFinishButton();
+
 }

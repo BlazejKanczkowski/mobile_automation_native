@@ -1,6 +1,7 @@
 package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.android.components.ProductListItemComponent;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductPageBase.class)
-public class ProductPage extends ProductPageBase {
+public class ProductPage extends ProductPageBase implements IMobileUtils {
 
     @AndroidFindBy(accessibility = "test-Cart")
     private ExtendedWebElement cartIcon;
@@ -114,7 +115,6 @@ public class ProductPage extends ProductPageBase {
     public void switchView() {
         if (switchViewButton.isElementPresent()) {
             switchViewButton.click();
-            pause(1);
         } else {
             throw new RuntimeException("Switch view button not found!");
         }
@@ -125,10 +125,7 @@ public class ProductPage extends ProductPageBase {
         productItems.stream()
                 .filter(p -> p.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
-                .ifPresent(item -> {
-                    item.clickItemName();
-                    pause(1);
-                });
+                .ifPresent(ProductListItemComponent::clickItemName);
     }
 
     @Override

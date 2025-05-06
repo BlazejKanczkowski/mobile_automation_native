@@ -20,5 +20,4 @@ public class OpenAboutPageTest extends BaseTest {
         AboutPageBase aboutPage = initPage(getDriver(), AboutPageBase.class);
         Assert.assertTrue(aboutPage.isSignUpButtonPresent(), "Sign up button is not visible on About page.");
     }
-    // DONE
 }

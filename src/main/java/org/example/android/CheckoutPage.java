@@ -1,13 +1,14 @@
 package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.pages.CheckoutPageBase;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckoutPageBase.class)
-public class CheckoutPage extends CheckoutPageBase {
+public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
     @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-First Name']")
     private ExtendedWebElement firstNameField;
@@ -52,5 +53,14 @@ public class CheckoutPage extends CheckoutPageBase {
     @Override
     public boolean isPageOpened() {
         return finishButton.isElementPresent();
+    }
+
+    public ExtendedWebElement getFinishButton() {
+        return finishButton;
+    }
+
+    @Override
+    public void scrollToFinishButton() {
+        swipe(finishButton);
     }
 }

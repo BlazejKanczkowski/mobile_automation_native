@@ -75,5 +75,4 @@ public class SortOptionsTest extends BaseTest {
 
         Assert.assertEquals(actualNames, expected, "Names not sorted correctly.");
     }
-    //DONE
 }

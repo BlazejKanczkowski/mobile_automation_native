@@ -13,10 +13,6 @@ public class LoginTest extends BaseTest {
     public void testValidLogin() {
 
         getLoginPage().login(UserCredentials.STANDARD_USER);
-
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product list is not visible – login might have failed.");
-
-        getMenuPage().logout();
     }
-    // DONE
 }

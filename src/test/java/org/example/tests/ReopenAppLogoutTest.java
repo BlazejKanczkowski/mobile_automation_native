@@ -30,5 +30,4 @@ public class ReopenAppLogoutTest extends BaseTest {
         LoginPageBase loginPageAfterRestart = initPage(getDriver(), LoginPageBase.class);
         Assert.assertTrue(loginPageAfterRestart.isPageOpened(), "User is still logged in after reopening the app.");
     }
-    //DONE
 }

@@ -13,6 +13,7 @@ public class AboutLinkTest extends BaseTest {
 
     @Test
     public void testOpenAboutPage() {
+
         getLoginPage().login(UserCredentials.STANDARD_USER);
 
         getMenuPage().openAboutPage();
@@ -24,5 +25,4 @@ public class AboutLinkTest extends BaseTest {
 
         Assert.assertTrue(true, "About page opened – verified manually or via context.");
     }
-    //DONE
 }

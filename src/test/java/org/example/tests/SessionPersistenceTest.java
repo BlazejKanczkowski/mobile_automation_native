@@ -30,5 +30,4 @@ public class SessionPersistenceTest extends BaseTest {
         ProductPageBase productPageAfterRestart = initPage(getDriver(), ProductPageBase.class);
         Assert.assertFalse(productPageAfterRestart.isProductListVisible(), "User should not remain logged in after app relaunch.");
     }
-    //DONE
 }

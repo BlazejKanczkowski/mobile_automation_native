@@ -18,5 +18,4 @@ public class ProductDetailsTest extends BaseTest {
 
         Assert.assertTrue(productPage.isDetailsPageOpened(), "Details page not opened.");
     }
-//DONE
 }

@@ -16,4 +16,7 @@ public abstract class CartPageBase extends BasePage {
     public abstract boolean isPageOpen();
 
     public abstract ExtendedWebElement getCheckoutButton();
+
+    public abstract void scrollToCheckoutButton();
+
 }

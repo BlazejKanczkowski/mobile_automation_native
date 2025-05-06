@@ -2,9 +2,7 @@ package org.example.utils;
 
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.factory.ICustomTypePageFactory;
-import org.example.pages.LoginPageBase;
-import org.example.pages.MenuPageBase;
-import org.example.pages.ProductPageBase;
+import org.example.pages.*;
 import org.openqa.selenium.WebDriver;
 
 public abstract class BaseTest extends AbstractTest implements ICustomTypePageFactory {
@@ -23,5 +21,13 @@ public abstract class BaseTest extends AbstractTest implements ICustomTypePageFa
 
     protected ProductPageBase getProductPage() {
         return initPage(getDriver(), ProductPageBase.class);
+    }
+
+    public CartPageBase getCartPage() {
+        return initPage(getDriver(), CartPageBase.class);
+    }
+
+    public CheckoutPageBase getCheckoutPage() {
+        return initPage(getDriver(), CheckoutPageBase.class);
     }
 }
