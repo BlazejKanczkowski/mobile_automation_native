@@ -12,17 +12,20 @@ public class ItemCountTest extends BaseTest {
 
     @Test
     public void testProductCountBeforeAndAfterSort() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list not visible.");
 
-        int countBefore = productPage.getDisplayedPrices().size();
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
-        productPage.sortBy(SortOption.PRICE_LOW_TO_HIGH);
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible.");
 
-        int countAfter = productPage.getDisplayedPrices().size();
+        int countBefore = getProductPage().getDisplayedPrices().size();
+
+        getProductPage().sortBy(SortOption.PRICE_LOW_TO_HIGH);
+
+        int countAfter = getProductPage().getDisplayedPrices().size();
 
         Assert.assertEquals(countAfter, countBefore, "Number of products changed after sort.");
+
+        getMenuPage().logout();
     }
     //DONE
 }

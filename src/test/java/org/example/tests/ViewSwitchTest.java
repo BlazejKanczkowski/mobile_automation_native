@@ -11,14 +11,14 @@ public class ViewSwitchTest extends BaseTest {
 
     @Test
     public void testSwitchBetweenListAndGridView() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
 
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list not visible.");
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
-        productPage.switchView();
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible.");
 
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list not visible after switching view.");
+        getProductPage().switchView();
+
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible after switching view.");
     }
     //DONE
 }

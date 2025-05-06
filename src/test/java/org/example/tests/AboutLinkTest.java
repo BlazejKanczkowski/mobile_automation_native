@@ -13,14 +13,11 @@ public class AboutLinkTest extends BaseTest {
 
     @Test
     public void testOpenAboutPage() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        loginPage.login(UserCredentials.STANDARD_USER);
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
-        MenuPageBase menuPage = initPage(getDriver(), MenuPageBase.class);
-        menuPage.openAboutPage();
+        getMenuPage().openAboutPage();
 
         WebDriver driver = getDriver();
-
         if (driver instanceof AndroidDriver) {
             ((AndroidDriver) driver).getContext();
         }

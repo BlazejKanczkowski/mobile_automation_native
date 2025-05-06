@@ -11,11 +11,12 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void testValidLogin() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        Assert.assertTrue(loginPage.isPageOpened(), "Login page is not opened.");
 
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list is not visible – login might have failed.");
+        getLoginPage().login(UserCredentials.STANDARD_USER);
+
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product list is not visible – login might have failed.");
+
+        getMenuPage().logout();
     }
     // DONE
 }

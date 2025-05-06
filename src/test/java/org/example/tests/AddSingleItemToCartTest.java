@@ -11,14 +11,17 @@ public class AddSingleItemToCartTest extends BaseTest {
 
     @Test
     public void testAddOneItemToCart() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product page not loaded.");
 
-        productPage.addProductToCartByName("Sauce Labs Backpack");
-        int cartCount = productPage.getCartCount();
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not loaded.");
+
+        getProductPage().addProductToCartByName("Sauce Labs Backpack");
+
+        int cartCount = getProductPage().getCartCount();
         Assert.assertEquals(cartCount, 1, "Cart badge count should be 1 after adding one product.");
+
+        getMenuPage().logout();
     }
     //DONE
 }

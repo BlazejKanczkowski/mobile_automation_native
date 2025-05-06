@@ -12,17 +12,13 @@ public class LogoutTest extends BaseTest {
 
     @Test
     public void testLogoutFlow() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        Assert.assertTrue(loginPage.isPageOpened(), "Login page is not opened.");
 
-        ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
-        Assert.assertTrue(productPage.isProductListVisible(), "Product list not visible – login might have failed.");
+        getLoginPage().login(UserCredentials.STANDARD_USER);
 
-        MenuPageBase menuPage = initPage(getDriver(), MenuPageBase.class);
-        menuPage.logout();
+        Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible – login might have failed.");
 
-        LoginPageBase loginPageAfterLogout = initPage(getDriver(), LoginPageBase.class);
-        Assert.assertTrue(loginPageAfterLogout.isPageOpened(), "Login page not shown after logout.");
+        getMenuPage().logout();
+        Assert.assertTrue(getLoginPage().isPageOpened(), "Login page not shown after logout.");
     }
     //DONE
 }
