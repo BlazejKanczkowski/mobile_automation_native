@@ -37,9 +37,7 @@ public abstract class BasePage extends AbstractPage {
 
     }
 
-    public void waitUntilPresent(ExtendedWebElement element, Duration timeout) {
-
+    public void waitUntilElementPresent(ExtendedWebElement element, Duration timeout) {
         element.waitUntil(ExpectedConditions.presenceOfElementLocated(element.getBy()), timeout);
-
     }
 }

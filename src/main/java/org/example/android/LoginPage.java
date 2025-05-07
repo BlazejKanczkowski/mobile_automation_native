@@ -7,6 +7,7 @@ import org.example.enums.UserCredentials;
 import org.example.pages.LoginPageBase;
 import org.example.pages.ProductPageBase;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class LoginPage extends LoginPageBase {
@@ -31,6 +32,7 @@ public class LoginPage extends LoginPageBase {
 
     @Override
     public ProductPageBase login(String username, String password) {
+        usernameField.waitUntil(ExpectedConditions.visibilityOf(usernameField.getElement()), 5);
         usernameField.type(username);
         passwordField.type(password);
         loginButton.click();

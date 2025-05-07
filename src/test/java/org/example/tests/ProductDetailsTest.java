@@ -14,7 +14,7 @@ public class ProductDetailsTest extends BaseTest {
         LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
         ProductPageBase productPage = loginPage.login(UserCredentials.STANDARD_USER);
 
-        productPage.openProductDetails("Sauce Labs Backpack");
+        productPage.openProductDetailsByName("Sauce Labs Backpack");
 
         Assert.assertTrue(productPage.isDetailsPageOpened(), "Details page not opened.");
     }

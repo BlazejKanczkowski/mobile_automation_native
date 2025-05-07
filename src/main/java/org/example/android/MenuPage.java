@@ -3,6 +3,7 @@ package org.example.android;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.example.enums.SortOption;
 import org.example.pages.MenuPageBase;
 import org.openqa.selenium.WebDriver;
 

@@ -28,7 +28,10 @@ public abstract class ProductPageBase extends BasePage {
 
     public abstract void switchView();
 
-    public abstract void openProductDetails(String productName);
+    public abstract void openProductDetailsByName(String productName);
 
     public abstract boolean isDetailsPageOpened();
+
+    public abstract void waitForProductsToBePresent();
+
 }

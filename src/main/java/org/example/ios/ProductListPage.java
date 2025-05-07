@@ -3,18 +3,22 @@ package org.example.ios;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.example.ios.components.FilterComponent;
 import org.example.ios.components.ProductListItemComponent;
 import org.example.enums.SortOption;
+import org.example.ios.components.TopMainMenuComponent;
 import org.example.pages.CartPageBase;
 import org.example.pages.ProductPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductPageBase.class)
-public class ProductPage extends ProductPageBase implements IMobileUtils {
+public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Cart']")
     private ExtendedWebElement cartIcon;
@@ -40,7 +44,19 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
     @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Toggle']")
     private ExtendedWebElement switchViewButton;
 
-    public ProductPage(WebDriver driver) {
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='test-Item title']")
+    private List<ExtendedWebElement> productNames;
+
+    @FindBy(xpath = "(//XCUIElementTypeStaticText[@name='test-Item title'])[1]")
+    private ExtendedWebElement firstProductTitle;
+
+    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Cart']")
+    private TopMainMenuComponent topMenu;
+
+    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Modal Selector Button']")
+    private FilterComponent filter;
+
+    public ProductListPage(WebDriver driver) {
         super(driver);
     }
 
@@ -56,14 +72,7 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public void sortBy(SortOption option) {
-        sortDropdown.click();
-        for (ExtendedWebElement opt : sortOptions) {
-            if (opt.getText().equalsIgnoreCase(option.getVisibleText())) {
-                opt.click();
-                return;
-            }
-        }
-        throw new RuntimeException("Sort option not found: " + option);
+        filter.sortBy(option);
     }
 
     @Override
@@ -93,25 +102,13 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public CartPageBase clickCartIcon() {
-        tap(cartIcon);
-        CartPageBase cartPage = initPage(getDriver(), CartPageBase.class);
-
-        if (!cartPage.isCheckoutButtonPresent()) {
-            throw new RuntimeException("Cart page did not load after clicking cart icon.");
-        }
-        return cartPage;
+        topMenu.clickCartIcon();
+        return initPage(getDriver(), CartPageBase.class);
     }
-
 
     @Override
     public int getCartCount() {
-        for (ExtendedWebElement el : cartBadgeElements) {
-            String text = el.getText();
-            if (text != null && text.matches("\\d+")) {
-                return Integer.parseInt(text);
-            }
-        }
-        return 0;
+        return topMenu.getCartCount();
     }
 
     @Override
@@ -131,14 +128,11 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
     }
 
     @Override
-    public void openProductDetails(String productName) {
-        for (ProductListItemComponent item : productItems) {
-            if (normalize(item.getItemName()).equalsIgnoreCase(normalize(productName))) {
-                item.clickItemName();
-                return;
-            }
-        }
-        throw new RuntimeException("Product not found: " + productName);
+    public void openProductDetailsByName(String productName) {
+        productItems.stream()
+                .filter(p -> p.getItemName().equalsIgnoreCase(productName))
+                .findFirst()
+                .ifPresent(ProductListItemComponent::clickItemName);
     }
 
     @Override
@@ -148,5 +142,10 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
 
     private String normalize(String name) {
         return name.trim().toLowerCase();
+    }
+
+    @Override
+    public void waitForProductsToBePresent() {
+        waitUntilElementPresent(firstProductTitle, Duration.ofSeconds(5));
     }
 }

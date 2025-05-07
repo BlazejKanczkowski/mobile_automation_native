@@ -4,31 +4,23 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.example.android.components.FilterComponent;
 import org.example.android.components.ProductListItemComponent;
+import org.example.android.components.TopMainMenuComponent;
 import org.example.enums.SortOption;
 import org.example.pages.CartPageBase;
 import org.example.pages.ProductPageBase;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductPageBase.class)
-public class ProductPage extends ProductPageBase implements IMobileUtils {
+public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
-    @AndroidFindBy(accessibility = "test-Cart")
-    private ExtendedWebElement cartIcon;
-
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.TextView")
-    private ExtendedWebElement cartBadge;
-
-    @AndroidFindBy(accessibility = "test-Modal Selector Button")
-    private ExtendedWebElement sortDropdown;
-
-    @AndroidFindBy(
-            xpath = "//android.widget.ScrollView//android.widget.TextView[not(contains(@text,'Sort items')) and not(contains(@text,'Cancel'))]"
-    )
-    private List<ExtendedWebElement> sortOptions;
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/..")
+    private TopMainMenuComponent topMenu;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private ExtendedWebElement pageTitle;
@@ -42,8 +34,16 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
     @AndroidFindBy(accessibility = "test-Toggle")
     private ExtendedWebElement switchViewButton;
 
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
+    private FilterComponent filter;
 
-    public ProductPage(WebDriver driver) {
+    @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='test-Item title']")
+    private List<ExtendedWebElement> productNames;
+
+    @AndroidFindBy(xpath = "(//android.widget.TextView[@content-desc='test-Item title'])[1]")
+    private ExtendedWebElement firstProductTitle;
+
+    public ProductListPage(WebDriver driver) {
         super(driver);
     }
 
@@ -59,16 +59,7 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public void sortBy(SortOption option) {
-        sortDropdown.click();
-        pause(1);
-        for (ExtendedWebElement opt : sortOptions) {
-            if (opt.getText().equalsIgnoreCase(option.getVisibleText())) {
-                opt.click();
-                pause(1);
-                return;
-            }
-        }
-        throw new RuntimeException("Sort option not found: " + option);
+        filter.sortBy(option);
     }
 
     @Override
@@ -88,27 +79,14 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
     @Override
     public void addProductToCartByName(String productName) {
         productItems.stream()
-                .filter(p -> normalize(p.getItemName()).contains(normalize(productName)))
+                .filter(product -> normalize(product.getItemName()).contains(normalize(productName)))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickAddToCart);
     }
 
     @Override
-    public CartPageBase clickCartIcon() {
-        cartIcon.click();
-        return initPage(getDriver(), CartPageBase.class);
-    }
-
-    @Override
-    public int getCartCount() {
-        return cartBadge.isElementPresent() ? Integer.parseInt(cartBadge.getText()) : 0;
-    }
-
-    @Override
     public void addProductsToCart(List<String> names) {
-        for (String name : names) {
-            addProductToCartByName(name);
-        }
+        names.forEach(this::addProductToCartByName);
     }
 
     @Override
@@ -121,9 +99,9 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
     }
 
     @Override
-    public void openProductDetails(String productName) {
+    public void openProductDetailsByName(String productName) {
         productItems.stream()
-                .filter(p -> p.getItemName().equalsIgnoreCase(productName))
+                .filter(product -> product.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickItemName);
     }
@@ -133,7 +111,23 @@ public class ProductPage extends ProductPageBase implements IMobileUtils {
         return detailsDescription.isElementPresent();
     }
 
+    @Override
+    public CartPageBase clickCartIcon() {
+        topMenu.clickCartIcon();
+        return initPage(getDriver(), CartPageBase.class);
+    }
+
+    @Override
+    public int getCartCount() {
+        return topMenu.getCartCount();
+    }
+
     private String normalize(String name) {
         return name.trim().toLowerCase();
+    }
+
+    @Override
+    public void waitForProductsToBePresent() {
+        waitUntilElementPresent(firstProductTitle, Duration.ofSeconds(5));
     }
 }

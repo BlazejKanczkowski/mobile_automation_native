@@ -15,18 +15,18 @@ public class ReopenAppLogoutTest extends BaseTest {
 
     @Test
     public void testAppReopenAfterLogin() {
-        getLoginPage().login(UserCredentials.STANDARD_USER);
+        LoginPageBase loginPage = getLoginPage();
+        loginPage.login(UserCredentials.STANDARD_USER);
 
         WebDriver driver = getDriver();
 
         if (driver instanceof InteractsWithApps) {
-            InteractsWithApps appInteraction = (InteractsWithApps) driver;
-            appInteraction.runAppInBackground(Duration.ofSeconds(5));
+            ((InteractsWithApps) driver).runAppInBackground(Duration.ofSeconds(5));
         } else {
             Assert.fail("Driver does not support app control.");
         }
 
-        LoginPageBase loginPageAfterRestart = initPage(getDriver(), LoginPageBase.class);
+        LoginPageBase loginPageAfterRestart = initPage(driver, LoginPageBase.class);
         Assert.assertFalse(loginPageAfterRestart.isPageOpened(), "User is not logged in after reopening the app.");
     }
 }
