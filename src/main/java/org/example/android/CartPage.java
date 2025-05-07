@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPageBase.class)
 public class CartPage extends CartPageBase implements IMobileUtils {
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CHECKOUT']")
+    @AndroidFindBy(accessibility = "test-CHECKOUT")
     private ExtendedWebElement checkoutButton;
 
     public CartPage(WebDriver driver) {

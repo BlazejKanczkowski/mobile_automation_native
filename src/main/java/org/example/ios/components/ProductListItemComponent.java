@@ -1,21 +1,30 @@
-package org.example.android.components;
+package org.example.ios.components;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class ProductListItemComponent extends AbstractUIObject {
 
-    @AndroidFindBy(xpath = ".//*[@content-desc='test-Item title']")
+    @FindBy(xpath = ".//*[@name='test-Item title']")
     private ExtendedWebElement itemName;
 
-    @AndroidFindBy(xpath = ".//*[@content-desc='test-Price']")
+    @FindBy(xpath = ".//*[@name='test-Price']")
     private ExtendedWebElement price;
 
-    @AndroidFindBy(xpath = ".//android.view.ViewGroup[@content-desc='test-ADD TO CART']")
+    @FindBy(xpath = ".//*[@name='test-ADD TO CART']")
     private ExtendedWebElement addToCartButton;
+
+    @FindBy(xpath = ".//*[@name='test-REMOVE']")
+    private ExtendedWebElement removeFromCartButton;
+
+    @FindBy(xpath = "//XCUIElementTypeOther[contains(@name, 'test-Item')]")
+    private List<ProductListItemComponent> productItems;
+
 
     public ProductListItemComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
@@ -35,7 +44,17 @@ public class ProductListItemComponent extends AbstractUIObject {
     }
 
     public void clickAddToCart() {
-        addToCartButton.click();
+        if (addToCartButton.isElementPresent() && addToCartButton.isVisible()) {
+            addToCartButton.click();
+        }
+    }
+
+    public boolean isAddToCartVisible() {
+        return addToCartButton.isElementPresent() && addToCartButton.isVisible();
+    }
+
+    public boolean isInCart() {
+        return removeFromCartButton.isElementPresent() && removeFromCartButton.isVisible();
     }
 
     public void clickItemName() {

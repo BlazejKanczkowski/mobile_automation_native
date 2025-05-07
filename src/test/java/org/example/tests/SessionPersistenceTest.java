@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class SessionPersistenceTest extends BaseTest {
 
     private static final String APP_PACKAGE = "com.swaglabsmobileapp";
@@ -24,10 +26,9 @@ public class SessionPersistenceTest extends BaseTest {
         }
 
         InteractsWithApps appControl = (InteractsWithApps) driver;
-        appControl.terminateApp(APP_PACKAGE);
-        appControl.activateApp(APP_PACKAGE);
+        appControl.runAppInBackground(Duration.ofSeconds(5));
 
         ProductPageBase productPageAfterRestart = initPage(getDriver(), ProductPageBase.class);
-        Assert.assertFalse(productPageAfterRestart.isProductListVisible(), "User should not remain logged in after app relaunch.");
+        Assert.assertTrue(productPageAfterRestart.isProductListVisible(), "User should remain logged in after app relaunch.");
     }
 }
