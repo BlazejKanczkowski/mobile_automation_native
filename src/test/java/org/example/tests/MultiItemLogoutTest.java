@@ -1,9 +1,6 @@
 package org.example.tests;
 
-import org.example.enums.UserCredentials;
-import org.example.pages.LoginPageBase;
-import org.example.pages.MenuPageBase;
-import org.example.pages.ProductPageBase;
+import org.example.enums.UserType;
 import org.example.utils.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,7 +15,7 @@ public class MultiItemLogoutTest extends BaseTest {
 
         List<String> products = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
 
-        getLoginPage().login(UserCredentials.STANDARD_USER);
+        loginToAccount();
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not loaded.");
 
         getProductPage().addProductsToCart(products);

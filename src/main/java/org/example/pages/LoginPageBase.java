@@ -1,6 +1,6 @@
 package org.example.pages;
 
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.openqa.selenium.WebDriver;
 
 public abstract class LoginPageBase extends BasePage {
@@ -9,7 +9,7 @@ public abstract class LoginPageBase extends BasePage {
         super(driver);
     }
 
-    public abstract ProductPageBase login(UserCredentials user);
+    public abstract ProductPageBase login(UserType user);
 
     public abstract ProductPageBase login(String username, String password);
 

@@ -3,7 +3,9 @@ package org.example.ios;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.example.android.components.ProductDetailsComponent;
+import org.example.components.ProductDetailsComponentBase;
+import org.example.components.TopMainMenuComponentBase;
 import org.example.ios.components.FilterComponent;
 import org.example.ios.components.ProductListItemComponent;
 import org.example.enums.SortOption;
@@ -16,6 +18,8 @@ import org.openqa.selenium.support.FindBy;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.example.utils.WaitUtil.waitUntilElementPresent;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductPageBase.class)
 public class ProductListPage extends ProductPageBase implements IMobileUtils {
@@ -36,7 +40,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     private ExtendedWebElement pageTitle;
 
     @FindBy(xpath = "//XCUIElementTypeOther[contains(@name, 'test-Item')]")
-    private List<ProductListItemComponent> productItems;
+    private List<ProductListItemComponent> productListItems;
 
     @FindBy(xpath = "//XCUIElementTypeScrollView//XCUIElementTypeStaticText[contains(@name, '.')]")
     private ExtendedWebElement detailsDescription;
@@ -55,6 +59,9 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Modal Selector Button']")
     private FilterComponent filter;
+
+    @FindBy(xpath = "//XCUIElementTypeScrollView")
+    private ProductDetailsComponent productDetails;
 
     public ProductListPage(WebDriver driver) {
         super(driver);
@@ -77,21 +84,21 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public List<String> getDisplayedProductNames() {
-        return productItems.stream()
+        return productListItems.stream()
                 .map(ProductListItemComponent::getItemName)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Double> getDisplayedPrices() {
-        return productItems.stream()
+    public List<Double> getProductPrices() {
+        return productListItems.stream()
                 .map(ProductListItemComponent::getItemPrice)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void addProductToCartByName(String productName) {
-        for (ProductListItemComponent item : productItems) {
+        for (ProductListItemComponent item : productListItems) {
             if (normalize(item.getItemName()).contains(normalize(productName))) {
                 item.clickAddToCart();
                 return;
@@ -108,7 +115,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public int getCartCount() {
-        return topMenu.getCartCount();
+        return topMenu.getCartItemCount();
     }
 
     @Override
@@ -129,7 +136,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public void openProductDetailsByName(String productName) {
-        productItems.stream()
+        productListItems.stream()
                 .filter(p -> p.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickItemName);
@@ -147,5 +154,15 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     @Override
     public void waitForProductsToBePresent() {
         waitUntilElementPresent(firstProductTitle, Duration.ofSeconds(5));
+    }
+
+    @Override
+    public TopMainMenuComponentBase getTopMainMenu() {
+        return topMenu;
+    }
+
+    @Override
+    public ProductDetailsComponentBase getProductDetails() {
+        return productDetails;
     }
 }

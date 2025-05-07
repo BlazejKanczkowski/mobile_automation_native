@@ -1,7 +1,7 @@
 package org.example.tests;
 
 import org.example.enums.SortOption;
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.example.pages.LoginPageBase;
 import org.example.pages.ProductPageBase;
 import org.example.utils.BaseTest;
@@ -23,8 +23,7 @@ public class SortOptionsTest extends BaseTest {
 
     @BeforeMethod
     public void login() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        productPage = loginPage.login(UserCredentials.STANDARD_USER);
+        productPage = loginToAccount();
     }
 
     @Test
@@ -47,7 +46,7 @@ public class SortOptionsTest extends BaseTest {
     }
 
     private void verifyPricesSorted(SoftAssert softAssert, boolean ascending) {
-        List<Double> prices = productPage.getDisplayedPrices();
+        List<Double> prices = productPage.getProductPrices();
         if (prices.size() < MIN_SORTABLE_ITEMS) {
             softAssert.fail("Too few prices to validate.");
             return;

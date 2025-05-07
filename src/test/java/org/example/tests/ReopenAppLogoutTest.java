@@ -1,9 +1,8 @@
 package org.example.tests;
 
 import io.appium.java_client.InteractsWithApps;
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.example.pages.LoginPageBase;
-import org.example.pages.ProductPageBase;
 import org.example.utils.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -15,8 +14,8 @@ public class ReopenAppLogoutTest extends BaseTest {
 
     @Test
     public void testAppReopenAfterLogin() {
-        LoginPageBase loginPage = getLoginPage();
-        loginPage.login(UserCredentials.STANDARD_USER);
+
+        loginToAccount();
 
         WebDriver driver = getDriver();
 

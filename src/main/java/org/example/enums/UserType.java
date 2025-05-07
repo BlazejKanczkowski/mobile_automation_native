@@ -1,6 +1,6 @@
 package org.example.enums;
 
-public enum UserCredentials {
+public enum UserType {
 
     STANDARD_USER("standard_user", "secret_sauce"),
     LOCKED_OUT_USER("locked_out_user", "secret_sauce");
@@ -8,7 +8,7 @@ public enum UserCredentials {
     private final String username;
     private final String password;
 
-    UserCredentials(String username, String password) {
+    UserType(String username, String password) {
         this.username = username;
         this.password = password;
     }

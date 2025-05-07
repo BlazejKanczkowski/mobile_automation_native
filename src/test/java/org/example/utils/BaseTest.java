@@ -2,6 +2,7 @@ package org.example.utils;
 
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.factory.ICustomTypePageFactory;
+import org.example.enums.UserType;
 import org.example.pages.*;
 import org.openqa.selenium.WebDriver;
 
@@ -29,5 +30,9 @@ public abstract class BaseTest extends AbstractTest implements ICustomTypePageFa
 
     public CheckoutPageBase getCheckoutPage() {
         return initPage(getDriver(), CheckoutPageBase.class);
+    }
+
+    public ProductPageBase loginToAccount() {
+        return getLoginPage().login(UserType.STANDARD_USER);
     }
 }

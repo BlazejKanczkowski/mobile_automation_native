@@ -1,8 +1,7 @@
 package org.example.tests;
 
 import io.appium.java_client.InteractsWithApps;
-import io.appium.java_client.android.AndroidDriver;
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.example.pages.ProductPageBase;
 import org.example.utils.BaseTest;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +17,7 @@ public class SessionPersistenceTest extends BaseTest {
     @Test
     public void testSessionPersistenceAfterAppRestart() {
 
-        ProductPageBase productPage = getLoginPage().login(UserCredentials.STANDARD_USER);
+        loginToAccount();
 
         WebDriver driver = getDriver();
         if (!(driver instanceof InteractsWithApps)) {

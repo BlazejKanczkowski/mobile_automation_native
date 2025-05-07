@@ -10,22 +10,22 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckoutPageBase.class)
 public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-First Name']")
+    @AndroidFindBy(accessibility = "test-First Name")
     private ExtendedWebElement firstNameField;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-Last Name']")
+    @AndroidFindBy(accessibility = "test-Last Name")
     private ExtendedWebElement lastNameField;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc='test-Zip/Postal Code']")
+    @AndroidFindBy(accessibility = "test-Zip/Postal Code")
     private ExtendedWebElement postalCodeField;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CONTINUE']")
+    @AndroidFindBy(accessibility = "test-CONTINUE")
     private ExtendedWebElement continueButton;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-FINISH']")
+    @AndroidFindBy(accessibility = "test-FINISH")
     private ExtendedWebElement finishButton;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='THANK YOU FOR YOU ORDER']")
+    @AndroidFindBy(accessibility = "THANK YOU FOR YOU ORDER")
     private ExtendedWebElement confirmationMessage;
 
     public CheckoutPage(WebDriver driver) {

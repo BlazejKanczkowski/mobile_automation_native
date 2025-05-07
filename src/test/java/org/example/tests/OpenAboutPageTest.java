@@ -1,8 +1,6 @@
 package org.example.tests;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.example.pages.AboutPageBase;
 import org.example.utils.BaseTest;
 import org.testng.Assert;
@@ -12,7 +10,8 @@ public class OpenAboutPageTest extends BaseTest {
 
     @Test
     public void testOpenAboutPage() {
-        getLoginPage().login(UserCredentials.STANDARD_USER);
+
+        loginToAccount();
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not visible after login.");
 
         getMenuPage().openAboutPage();

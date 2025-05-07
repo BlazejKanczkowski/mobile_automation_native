@@ -2,7 +2,7 @@ package org.example.ios;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.example.enums.UserCredentials;
+import org.example.enums.UserType;
 import org.example.pages.LoginPageBase;
 import org.example.pages.ProductPageBase;
 import org.openqa.selenium.WebDriver;
@@ -25,7 +25,7 @@ public class LoginPage extends LoginPageBase {
     }
 
     @Override
-    public ProductPageBase login(UserCredentials user) {
+    public ProductPageBase login(UserType user) {
         return login(user.getUsername(), user.getPassword());
     }
 

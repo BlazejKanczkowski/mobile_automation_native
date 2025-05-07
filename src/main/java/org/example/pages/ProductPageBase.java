@@ -1,5 +1,8 @@
 package org.example.pages;
 
+
+import org.example.components.ProductDetailsComponentBase;
+import org.example.components.TopMainMenuComponentBase;
 import org.example.enums.SortOption;
 import org.openqa.selenium.WebDriver;
 import java.util.List;
@@ -18,7 +21,7 @@ public abstract class ProductPageBase extends BasePage {
 
     public abstract int getCartCount();
 
-    public abstract List<Double> getDisplayedPrices();
+    public abstract List<Double> getProductPrices();
 
     public abstract void addProductToCartByName(String productName);
 
@@ -33,5 +36,9 @@ public abstract class ProductPageBase extends BasePage {
     public abstract boolean isDetailsPageOpened();
 
     public abstract void waitForProductsToBePresent();
+
+    public abstract ProductDetailsComponentBase getProductDetails();
+
+    public abstract TopMainMenuComponentBase getTopMainMenu();
 
 }
