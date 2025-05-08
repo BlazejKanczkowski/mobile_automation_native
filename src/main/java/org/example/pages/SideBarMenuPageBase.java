@@ -2,9 +2,9 @@ package org.example.pages;
 
 import org.openqa.selenium.WebDriver;
 
-public abstract class MenuPageBase extends BasePage {
+public abstract class SideBarMenuPageBase extends BasePage {
 
-    public MenuPageBase(WebDriver driver) {
+    public SideBarMenuPageBase(WebDriver driver) {
         super(driver);
     }
 

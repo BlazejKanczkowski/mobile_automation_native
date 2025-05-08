@@ -1,5 +1,8 @@
 package org.example.tests;
 
+import org.example.pages.CartPageBase;
+import org.example.pages.CheckoutPageBase;
+import org.example.pages.ProductListPageBase;
 import org.example.utils.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,23 +17,26 @@ public class CheckoutTest extends BaseTest {
 
         List<String> products = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light");
 
-        loginToAccount();
-        Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not loaded.");
+        ProductListPageBase productPage = loginAsStandardUser(true);
+        Assert.assertTrue(productPage.isProductListVisible(), "Product page not loaded.");
 
+        productPage.addProductsToCart(products);
+        Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
 
-        getProductPage().addProductsToCart(products);
-        Assert.assertEquals(getProductPage().getCartCount(), products.size(), "Incorrect cart badge count.");
-        getProductPage().clickCartIcon();
+        productPage.clickCartIcon();
 
-        getCartPage().scrollToCheckoutButton();
-        Assert.assertTrue(getCartPage().isCheckoutButtonPresent(), "Checkout button not found.");
-        getCartPage().clickCheckout();
+        CartPageBase cartPage = getCartPage();
+        cartPage.scrollToCheckoutButton();
+        Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
+        cartPage.clickCheckout();
 
-        getCheckoutPage().fillForm("User", "LastName", "12345");
-        getCheckoutPage().scrollToFinishButton();
+        CheckoutPageBase checkoutPageBase = getCheckoutPage();
+        checkoutPageBase.fillForm("User", "LastName", "12345");
+        checkoutPageBase.scrollToFinishButton();
+        checkoutPageBase.finishOrder();
 
-        getCheckoutPage().finishOrder();
+        Assert.assertTrue(checkoutPageBase.isConfirmationDisplayed(), "Order confirmation not visible.");
 
-        Assert.assertTrue(getCheckoutPage().isConfirmationDisplayed(), "Order confirmation not visible.");
+        //to do: implementing total price check using big decimal
     }
 }

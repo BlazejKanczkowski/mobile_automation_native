@@ -1,8 +1,7 @@
 package org.example.tests;
 
-import org.example.components.ProductDetailsComponentBase;
 import org.example.components.TopMainMenuComponentBase;
-import org.example.pages.ProductPageBase;
+import org.example.pages.ProductListPageBase;
 import org.example.utils.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,7 +10,7 @@ public class CartTest extends BaseTest {
 
     @Test
     public void testAddProductToCart() {
-        ProductPageBase productPage = loginToAccount();
+        ProductListPageBase productPage = loginAsStandardUser(true);
         Assert.assertTrue(productPage.isProductListVisible(), "Product page not loaded.");
 
         TopMainMenuComponentBase topMenu = productPage.getTopMainMenu();

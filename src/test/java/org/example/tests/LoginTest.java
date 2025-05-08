@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void testValidLogin() {
 
-        loginToAccount();
+        loginAsStandardUser(true);
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product list is not visible – login might have failed.");
     }
 }

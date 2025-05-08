@@ -3,11 +3,11 @@ package org.example.android;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.example.pages.MenuPageBase;
+import org.example.pages.SideBarMenuPageBase;
 import org.openqa.selenium.WebDriver;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = MenuPageBase.class)
-public class SideBarMenuPage extends MenuPageBase {
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = SideBarMenuPageBase.class)
+public class SideBarSideBarMenuPage extends SideBarMenuPageBase {
 
     @ExtendedFindBy(accessibilityId = "test-Menu")
     private ExtendedWebElement menuButton;
@@ -18,7 +18,7 @@ public class SideBarMenuPage extends MenuPageBase {
     @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     private ExtendedWebElement logoutOption;
 
-    public SideBarMenuPage(WebDriver driver) {
+    public SideBarSideBarMenuPage(WebDriver driver) {
         super(driver);
     }
 
@@ -32,5 +32,10 @@ public class SideBarMenuPage extends MenuPageBase {
     public void logout() {
         menuButton.click();
         logoutOption.clickIfPresent();
+    }
+
+    @Override
+    public boolean isPageOpened() {
+        return menuButton.isElementPresent();
     }
 }

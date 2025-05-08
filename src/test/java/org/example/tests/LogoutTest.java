@@ -9,7 +9,7 @@ public class LogoutTest extends BaseTest {
     @Test
     public void testLogoutFlow() {
 
-        loginToAccount();
+        loginAsStandardUser(true);
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible – login might have failed.");
 
         getMenuPage().logout();

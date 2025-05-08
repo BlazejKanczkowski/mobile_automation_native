@@ -10,7 +10,7 @@ public class ItemCountTest extends BaseTest {
     @Test
     public void testProductCountUnchangedAfterSortByPrice() {
 
-        loginToAccount();
+        loginAsStandardUser(true);
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product list not visible.");
 
         int productCountBeforeSort = getProductPage().getProductPrices().size();

@@ -9,9 +9,7 @@ public abstract class LoginPageBase extends BasePage {
         super(driver);
     }
 
-    public abstract ProductPageBase login(UserType user);
-
-    public abstract ProductPageBase login(String username, String password);
+    public abstract ProductListPageBase login(UserType userType, boolean useAutoFilling);
 
     public abstract boolean isLoginButtonDisplayed();
 

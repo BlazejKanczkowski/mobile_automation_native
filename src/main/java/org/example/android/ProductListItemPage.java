@@ -5,15 +5,15 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.android.components.FilterComponent;
-import org.example.android.components.ProductDetailsComponent;
 import org.example.android.components.ProductListItemComponent;
 import org.example.android.components.TopMainMenuComponent;
-import org.example.components.ProductDetailsComponentBase;
 import org.example.components.TopMainMenuComponentBase;
 import org.example.enums.SortOption;
 import org.example.pages.CartPageBase;
-import org.example.pages.ProductPageBase;
+import org.example.pages.ProductListPageBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 import java.util.List;
@@ -21,14 +21,11 @@ import java.util.stream.Collectors;
 
 import static org.example.utils.WaitUtil.waitUntilElementPresent;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductPageBase.class)
-public class ProductListPage extends ProductPageBase implements IMobileUtils {
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductListPageBase.class)
+public class ProductListItemPage extends ProductListPageBase implements IMobileUtils {
 
     @ExtendedFindBy(accessibilityId = "test-PRODUCTS")
     private ExtendedWebElement pageTitle;
-
-    @ExtendedFindBy(accessibilityId = "test-Item")
-    private List<ProductListItemComponent> productListItems;
 
     @ExtendedFindBy(accessibilityId = "test-BACK TO PRODUCTS")
     private ExtendedWebElement backToProductsButton;
@@ -45,23 +42,27 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     @ExtendedFindBy(accessibilityId = "test-Cart")
     private TopMainMenuComponent topMenu;
 
-    public ProductListPage(WebDriver driver) {
+    public ProductListItemPage(WebDriver driver) {
         super(driver);
+    }
+
+    private static final By PRODUCT_CONTAINER_LOCATOR = By.xpath("//android.view.ViewGroup[@content-desc='test-Item']");
+
+    private List<ProductListItemComponent> getProductListItems() {
+        List<WebElement> elements = getDriver().findElements(PRODUCT_CONTAINER_LOCATOR);
+        return elements.stream()
+                .map(el -> new ProductListItemComponent(getDriver(), el))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void removeProductFromCartByName(String productName) {
-        for (ProductListItemComponent product : productListItems) {
+        for (ProductListItemComponent product : getProductListItems()) {
             if (product.getItemName().equalsIgnoreCase(productName)) {
                 product.clickRemoveFromCart();
                 break;
             }
         }
-    }
-
-    @Override
-    public ProductDetailsComponentBase getProductDetails() {
-        return new ProductDetailsComponent(getDriver());
     }
 
     @Override
@@ -82,44 +83,39 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public List<String> getDisplayedProductNames() {
-        return productListItems.stream()
+        return getProductListItems().stream()
                 .map(ProductListItemComponent::getItemName)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Double> getProductPrices() {
-        return productListItems.stream()
+        return getProductListItems().stream()
                 .map(ProductListItemComponent::getItemPrice)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void addProductToCartByName(String productName) {
-        productListItems.stream()
-                .filter(product -> normalize(product.getItemName()).contains(normalize(productName)))
-                .findFirst()
-                .ifPresent(ProductListItemComponent::clickAddToCart);
+        for (ProductListItemComponent product : getProductListItems()) {
+            if (normalize(product.getItemName()).contains(normalize(productName))) {
+                product.clickAddToCart();
+                break;
+            }
+        }
     }
 
     @Override
     public void addProductsToCart(List<String> names) {
-        names.forEach(this::addProductToCartByName);
-    }
-
-    @Override
-    public void switchView() {
-        if (switchViewButton.isElementPresent()) {
-            switchViewButton.click();
-        } else {
-            throw new RuntimeException("Switch view button not found!");
+        for (String name : names) {
+            addProductToCartByName(name);
         }
     }
 
     @Override
     public void openProductByName(String productName) {
         waitForProductsToBePresent();
-        productListItems.stream()
+        getProductListItems().stream()
                 .filter(product -> product.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickItemName);
@@ -145,9 +141,11 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
         return name.trim().toLowerCase();
     }
 
+    private static final Duration PRODUCT_WAIT_TIMEOUT = Duration.ofSeconds(5);
+
     @Override
     public void waitForProductsToBePresent() {
-        waitUntilElementPresent(firstProductTitle, Duration.ofSeconds(5));
+        waitUntilElementPresent(firstProductTitle, PRODUCT_WAIT_TIMEOUT);
     }
 
     @Override

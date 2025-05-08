@@ -11,7 +11,7 @@ public class OpenAboutPageTest extends BaseTest {
     @Test
     public void testOpenAboutPage() {
 
-        loginToAccount();
+        loginAsStandardUser(true);
         Assert.assertTrue(getProductPage().isProductListVisible(), "Product page not visible after login.");
 
         getMenuPage().openAboutPage();

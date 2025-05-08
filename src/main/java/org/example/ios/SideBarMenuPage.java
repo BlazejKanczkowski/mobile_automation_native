@@ -2,12 +2,12 @@ package org.example.ios;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.example.pages.MenuPageBase;
+import org.example.pages.SideBarMenuPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = MenuPageBase.class)
-public class MenuPage extends MenuPageBase {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = SideBarMenuPageBase.class)
+public class SideBarMenuPage extends SideBarMenuPageBase {
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Menu']")
     private ExtendedWebElement menuButton;
@@ -18,7 +18,7 @@ public class MenuPage extends MenuPageBase {
     @FindBy(xpath = "//XCUIElementTypeOther[@name='test-LOGOUT']")
     private ExtendedWebElement logoutOption;
 
-    public MenuPage(WebDriver driver) {
+    public SideBarMenuPage(WebDriver driver) {
         super(driver);
     }
 

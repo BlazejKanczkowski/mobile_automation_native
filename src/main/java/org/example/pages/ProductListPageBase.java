@@ -1,15 +1,14 @@
 package org.example.pages;
 
 
-import org.example.components.ProductDetailsComponentBase;
 import org.example.components.TopMainMenuComponentBase;
 import org.example.enums.SortOption;
 import org.openqa.selenium.WebDriver;
 import java.util.List;
 
-public abstract class ProductPageBase extends BasePage {
+public abstract class ProductListPageBase extends BasePage {
 
-    public ProductPageBase(WebDriver driver) {
+    public ProductListPageBase(WebDriver driver) {
         super(driver);
     }
 
@@ -29,17 +28,14 @@ public abstract class ProductPageBase extends BasePage {
 
     public abstract List<String> getDisplayedProductNames();
 
-    public abstract void switchView();
-
     public abstract void openProductByName(String productName);
 
     public abstract boolean isDetailsPageOpened();
 
     public abstract void waitForProductsToBePresent();
 
-    public abstract ProductDetailsComponentBase getProductDetails();
-
     public abstract TopMainMenuComponentBase getTopMainMenu();
 
     public abstract void removeProductFromCartByName(String productName);
+
 }

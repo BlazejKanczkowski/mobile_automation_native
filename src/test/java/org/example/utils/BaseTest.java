@@ -4,6 +4,7 @@ import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.factory.ICustomTypePageFactory;
 import org.example.enums.UserType;
 import org.example.pages.*;
+import org.testng.Assert;
 
 public abstract class BaseTest extends AbstractTest implements ICustomTypePageFactory {
 
@@ -11,12 +12,12 @@ public abstract class BaseTest extends AbstractTest implements ICustomTypePageFa
         return initPage(getDriver(), LoginPageBase.class);
     }
 
-    protected MenuPageBase getMenuPage() {
-        return initPage(getDriver(), MenuPageBase.class);
+    protected SideBarMenuPageBase getMenuPage() {
+        return initPage(getDriver(), SideBarMenuPageBase.class);
     }
 
-    protected ProductPageBase getProductPage() {
-        return initPage(getDriver(), ProductPageBase.class);
+    protected ProductListPageBase getProductPage() {
+        return initPage(getDriver(), ProductListPageBase.class);
     }
 
     public CartPageBase getCartPage() {
@@ -27,7 +28,10 @@ public abstract class BaseTest extends AbstractTest implements ICustomTypePageFa
         return initPage(getDriver(), CheckoutPageBase.class);
     }
 
-    public ProductPageBase loginToAccount() {
-        return getLoginPage().login(UserType.STANDARD_USER);
+    public ProductListPageBase loginAsStandardUser(boolean useAutoFilling) {
+        LoginPageBase loginPageBase = initPage(LoginPageBase.class);
+        ProductListPageBase productsPageBase = loginPageBase.login(UserType.STANDARD_USER, useAutoFilling);
+        Assert.assertTrue(productsPageBase.isPageOpened(), "Product page is not opened");
+        return productsPageBase;
     }
 }

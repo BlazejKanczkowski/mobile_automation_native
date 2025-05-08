@@ -1,7 +1,7 @@
 package org.example.tests;
 
 import org.example.enums.SortOption;
-import org.example.pages.ProductPageBase;
+import org.example.pages.ProductListPageBase;
 import org.example.utils.BaseTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,11 +17,11 @@ public class SortOptionsTest extends BaseTest {
     private static final int FIRST_INDEX = 0;
     private static final int SECOND_INDEX = 1;
 
-    private ProductPageBase productPage;
+    private ProductListPageBase productPage;
 
     @BeforeMethod
     public void login() {
-        productPage = loginToAccount();
+        productPage = loginAsStandardUser(true);
     }
 
     @Test
