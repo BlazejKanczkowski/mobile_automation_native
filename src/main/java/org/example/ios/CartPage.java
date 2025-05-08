@@ -40,11 +40,6 @@ public class CartPage extends CartPageBase implements IMobileUtils {
     }
 
     @Override
-    public ExtendedWebElement getCheckoutButton() {
-        return checkoutButton;
-    }
-
-    @Override
     public void scrollToCheckoutButton() {
         swipe(checkoutButton);
     }
