@@ -2,7 +2,7 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.enums.UserType;
 import org.example.pages.LoginPageBase;
 import org.example.pages.ProductPageBase;
@@ -12,13 +12,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPageBase.class)
 public class LoginPage extends LoginPageBase {
 
-    @AndroidFindBy(accessibility = "test-Username")
+    @ExtendedFindBy(accessibilityId = "test-Username")
     private ExtendedWebElement usernameField;
 
-    @AndroidFindBy(accessibility = "test-Password")
+    @ExtendedFindBy(accessibilityId = "test-Password")
     private ExtendedWebElement passwordField;
 
-    @AndroidFindBy(accessibility = "test-LOGIN")
+    @ExtendedFindBy(accessibilityId = "test-LOGIN")
     private ExtendedWebElement loginButton;
 
     public LoginPage(WebDriver driver) {

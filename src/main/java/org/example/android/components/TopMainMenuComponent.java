@@ -2,6 +2,7 @@ package org.example.android.components;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.components.TopMainMenuComponentBase;
 import org.openqa.selenium.SearchContext;
@@ -9,10 +10,10 @@ import org.openqa.selenium.WebDriver;
 
 public class TopMainMenuComponent extends TopMainMenuComponentBase {
 
-    @AndroidFindBy(accessibility = "test-Cart")
+    @ExtendedFindBy(accessibilityId = "test-Cart")
     private ExtendedWebElement cartIcon;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.TextView")
+    @ExtendedFindBy(accessibilityId = "test-Cart Badge")
     private ExtendedWebElement cartBadge;
 
     public TopMainMenuComponent(WebDriver driver, SearchContext searchContext) {

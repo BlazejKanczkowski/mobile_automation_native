@@ -2,6 +2,7 @@ package org.example.android.components;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.enums.SortOption;
 import org.openqa.selenium.By;
@@ -16,7 +17,7 @@ import java.time.Duration;
 
 public class FilterComponent extends AbstractUIObject {
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']//android.widget.ImageView")
+    @ExtendedFindBy(accessibilityId = "test-Modal Selector Button")
     private ExtendedWebElement sortDropdown;
 
     public FilterComponent(WebDriver driver, SearchContext searchContext) {

@@ -3,30 +3,30 @@ package org.example.android;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.pages.CheckoutPageBase;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckoutPageBase.class)
 public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
-    @AndroidFindBy(accessibility = "test-First Name")
+    @ExtendedFindBy(accessibilityId = "test-First Name")
     private ExtendedWebElement firstNameField;
 
-    @AndroidFindBy(accessibility = "test-Last Name")
+    @ExtendedFindBy(accessibilityId = "test-Last Name")
     private ExtendedWebElement lastNameField;
 
-    @AndroidFindBy(accessibility = "test-Zip/Postal Code")
+    @ExtendedFindBy(accessibilityId = "test-Zip/Postal Code")
     private ExtendedWebElement postalCodeField;
 
-    @AndroidFindBy(accessibility = "test-CONTINUE")
+    @ExtendedFindBy(accessibilityId = "test-CONTINUE")
     private ExtendedWebElement continueButton;
 
-    @AndroidFindBy(accessibility = "test-FINISH")
+    @ExtendedFindBy(accessibilityId = "test-FINISH")
     private ExtendedWebElement finishButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"THANK YOU FOR YOU ORDER\")")
-    private ExtendedWebElement confirmationMessage;
+    @ExtendedFindBy(accessibilityId = "test-BACK HOME")
+    private ExtendedWebElement backHomeButton;
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -47,7 +47,7 @@ public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
     @Override
     public boolean isConfirmationDisplayed() {
-        return confirmationMessage.isElementPresent();
+        return backHomeButton.isElementPresent();
     }
 
     @Override

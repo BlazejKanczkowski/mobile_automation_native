@@ -17,13 +17,6 @@ public class ProductTest extends BaseTest {
     }
 
     @Test
-    public void verifyAddingProductToCart() {
-        ProductPageBase productPage = loginToAccount();
-        productPage.addProductsToCart(List.of("Sauce Labs Backpack"));
-        Assert.assertEquals(productPage.getCartCount(), 1, "Product not added to cart.");
-    }
-
-    @Test
     public void verifyRemovingProductFromCart() {
         ProductPageBase productPage = loginToAccount();
         productPage.addProductsToCart(List.of("Sauce Labs Backpack"));

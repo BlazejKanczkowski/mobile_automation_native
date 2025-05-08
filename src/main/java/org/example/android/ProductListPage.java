@@ -3,7 +3,7 @@ package org.example.android;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.android.components.FilterComponent;
 import org.example.android.components.ProductDetailsComponent;
 import org.example.android.components.ProductListItemComponent;
@@ -24,25 +24,25 @@ import static org.example.utils.WaitUtil.waitUntilElementPresent;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductPageBase.class)
 public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
+    @ExtendedFindBy(accessibilityId = "test-PRODUCTS")
     private ExtendedWebElement pageTitle;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[contains(@content-desc, 'test-Item')]")
+    @ExtendedFindBy(accessibilityId = "test-Item")
     private List<ProductListItemComponent> productListItems;
 
-    @AndroidFindBy(xpath = "//android.widget.ScrollView//android.widget.TextView[contains(@text, '.')]")
-    private ExtendedWebElement detailsDescription;
+    @ExtendedFindBy(accessibilityId = "test-BACK TO PRODUCTS")
+    private ExtendedWebElement backToProductsButton;
 
-    @AndroidFindBy(accessibility = "test-Toggle")
+    @ExtendedFindBy(accessibilityId = "test-Toggle")
     private ExtendedWebElement switchViewButton;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
+    @ExtendedFindBy(accessibilityId = "test-Modal Selector Button")
     private FilterComponent filter;
 
-    @AndroidFindBy(xpath = "(//android.widget.TextView[@content-desc='test-Item title'])[1]")
+    @ExtendedFindBy(accessibilityId = "test-Item title")
     private ExtendedWebElement firstProductTitle;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/..")
+    @ExtendedFindBy(accessibilityId = "test-Cart")
     private TopMainMenuComponent topMenu;
 
     public ProductListPage(WebDriver driver) {
@@ -77,6 +77,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     @Override
     public void sortBy(SortOption option) {
         filter.sortBy(option);
+        waitForProductsToBePresent();
     }
 
     @Override
@@ -117,6 +118,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public void openProductByName(String productName) {
+        waitForProductsToBePresent();
         productListItems.stream()
                 .filter(product -> product.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
@@ -125,7 +127,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     @Override
     public boolean isDetailsPageOpened() {
-        return detailsDescription.isElementPresent();
+        return backToProductsButton.isElementPresent();
     }
 
     @Override

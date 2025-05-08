@@ -12,8 +12,6 @@ import java.time.Duration;
 
 public class SessionPersistenceTest extends BaseTest {
 
-    private static final String APP_PACKAGE = "com.swaglabsmobileapp";
-
     @Test
     public void testSessionPersistenceAfterAppRestart() {
 

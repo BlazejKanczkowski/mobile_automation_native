@@ -2,23 +2,23 @@ package org.example.android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.pages.MenuPageBase;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = MenuPageBase.class)
-public class MenuPage extends MenuPageBase {
+public class SideBarMenuPage extends MenuPageBase {
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"test-Menu\")")
+    @ExtendedFindBy(accessibilityId = "test-Menu")
     private ExtendedWebElement menuButton;
 
-    @AndroidFindBy(accessibility = "test-ABOUT")
+    @ExtendedFindBy(accessibilityId = "test-ABOUT")
     private ExtendedWebElement aboutOption;
 
-    @AndroidFindBy(accessibility = "test-LOGOUT")
+    @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     private ExtendedWebElement logoutOption;
 
-    public MenuPage(WebDriver driver) {
+    public SideBarMenuPage(WebDriver driver) {
         super(driver);
     }
 
