@@ -14,7 +14,6 @@ import org.example.enums.SortOption;
 import org.example.pages.CartPageBase;
 import org.example.pages.ProductPageBase;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
 import java.util.List;
@@ -40,9 +39,6 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
     private FilterComponent filter;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='test-Item title']")
-    private List<ExtendedWebElement> productNames;
-
     @AndroidFindBy(xpath = "(//android.widget.TextView[@content-desc='test-Item title'])[1]")
     private ExtendedWebElement firstProductTitle;
 
@@ -51,6 +47,16 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
 
     public ProductListPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public void removeProductFromCartByName(String productName) {
+        for (ProductListItemComponent product : productListItems) {
+            if (product.getItemName().equalsIgnoreCase(productName)) {
+                product.clickRemoveFromCart();
+                break;
+            }
+        }
     }
 
     @Override
@@ -110,7 +116,7 @@ public class ProductListPage extends ProductPageBase implements IMobileUtils {
     }
 
     @Override
-    public void openProductDetailsByName(String productName) {
+    public void openProductByName(String productName) {
         productListItems.stream()
                 .filter(product -> product.getItemName().equalsIgnoreCase(productName))
                 .findFirst()

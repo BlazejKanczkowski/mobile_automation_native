@@ -21,9 +21,4 @@ public abstract class CartPageBase extends BasePage {
 
     public abstract void scrollToCheckoutButton();
 
-    public abstract List<Double> getProductPrices();
-
-    public abstract double getTotalPrice();
-
-
 }

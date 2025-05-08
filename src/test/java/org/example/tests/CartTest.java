@@ -16,9 +16,7 @@ public class CartTest extends BaseTest {
 
         TopMainMenuComponentBase topMenu = productPage.getTopMainMenu();
         int initialItemCount = topMenu.getCartItemCount();
-
         productPage.addProductToCartByName("Sauce Labs Backpack");
-
         int updatedItemCount = topMenu.getCartItemCount();
 
         Assert.assertTrue(updatedItemCount > initialItemCount, "Product was not successfully added to the cart.");

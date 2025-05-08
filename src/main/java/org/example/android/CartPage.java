@@ -7,6 +7,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.pages.CartPageBase;
 import org.example.pages.CheckoutPageBase;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,31 +18,8 @@ public class CartPage extends CartPageBase implements IMobileUtils {
     @AndroidFindBy(accessibility = "test-CHECKOUT")
     private ExtendedWebElement checkoutButton;
 
-    @AndroidFindBy(accessibility = "test-Price")
-    private List<ExtendedWebElement> productPrices;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().textStartsWith(\"Item total:\")")
-    private ExtendedWebElement totalPrice;
-
     public CartPage(WebDriver driver) {
         super(driver);
-    }
-
-    @Override
-    public List<Double> getProductPrices() {
-        return productPrices.stream()
-                .map(ExtendedWebElement::getText)
-                .filter(text -> text.startsWith("$"))
-                .map(text -> text.replace("$", "").trim())
-                .map(Double::parseDouble)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public double getTotalPrice() {
-        String text = totalPrice.getText();
-        String amount = text.replace("Item total: $", "").trim();
-        return Double.parseDouble(amount);
     }
 
     @Override
@@ -59,11 +37,6 @@ public class CartPage extends CartPageBase implements IMobileUtils {
     @Override
     public boolean isPageOpen() {
         return checkoutButton.isElementPresent();
-    }
-
-    @Override
-    public ExtendedWebElement getCheckoutButton() {
-        return checkoutButton;
     }
 
     @Override

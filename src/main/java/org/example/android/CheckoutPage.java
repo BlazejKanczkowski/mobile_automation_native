@@ -25,7 +25,7 @@ public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
     @AndroidFindBy(accessibility = "test-FINISH")
     private ExtendedWebElement finishButton;
 
-    @AndroidFindBy(accessibility = "THANK YOU FOR YOU ORDER")
+    @AndroidFindBy(uiAutomator = "new UiSelector().text(\"THANK YOU FOR YOU ORDER\")")
     private ExtendedWebElement confirmationMessage;
 
     public CheckoutPage(WebDriver driver) {

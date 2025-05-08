@@ -16,7 +16,7 @@ import java.time.Duration;
 
 public class FilterComponent extends AbstractUIObject {
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']/android.view.ViewGroup/android.view.ViewGroup/android.widget.ImageView")
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']//android.widget.ImageView")
     private ExtendedWebElement sortDropdown;
 
     public FilterComponent(WebDriver driver, SearchContext searchContext) {

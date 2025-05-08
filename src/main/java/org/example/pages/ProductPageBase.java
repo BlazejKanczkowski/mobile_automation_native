@@ -31,7 +31,7 @@ public abstract class ProductPageBase extends BasePage {
 
     public abstract void switchView();
 
-    public abstract void openProductDetailsByName(String productName);
+    public abstract void openProductByName(String productName);
 
     public abstract boolean isDetailsPageOpened();
 
@@ -41,4 +41,5 @@ public abstract class ProductPageBase extends BasePage {
 
     public abstract TopMainMenuComponentBase getTopMainMenu();
 
+    public abstract void removeProductFromCartByName(String productName);
 }

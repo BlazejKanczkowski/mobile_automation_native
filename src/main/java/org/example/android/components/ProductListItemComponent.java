@@ -11,11 +11,14 @@ public class ProductListItemComponent extends AbstractUIObject {
     @AndroidFindBy(xpath = ".//*[@content-desc='test-Item title']")
     private ExtendedWebElement itemName;
 
-    @AndroidFindBy(xpath = ".//*[@content-desc='test-Price']")
+    @AndroidFindBy(accessibility = "test-Price")
     private ExtendedWebElement price;
 
-    @AndroidFindBy(xpath = ".//android.view.ViewGroup[@content-desc='test-ADD TO CART']")
+    @AndroidFindBy(accessibility = "test-ADD TO CART")
     private ExtendedWebElement addToCartButton;
+
+    @AndroidFindBy(accessibility = "test-REMOVE")
+    private ExtendedWebElement removeButton;
 
     public ProductListItemComponent(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
@@ -40,5 +43,11 @@ public class ProductListItemComponent extends AbstractUIObject {
 
     public void clickItemName() {
         itemName.click();
+    }
+
+    public void clickRemoveFromCart() {
+        if (removeButton.isElementPresent()) {
+            removeButton.click();
+        }
     }
 }

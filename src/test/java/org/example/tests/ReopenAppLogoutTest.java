@@ -1,8 +1,10 @@
 package org.example.tests;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import io.appium.java_client.InteractsWithApps;
 import org.example.enums.UserType;
 import org.example.pages.LoginPageBase;
+import org.example.pages.ProductPageBase;
 import org.example.utils.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -10,22 +12,19 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class ReopenAppLogoutTest extends BaseTest {
+public class ReopenAppLogoutTest extends BaseTest implements IMobileUtils {
+
+    private static final String APP_ID = "com.swaglabsmobileapp";
 
     @Test
     public void testAppReopenAfterLogin() {
 
-        loginToAccount();
+        ProductPageBase productPage = loginToAccount();
 
-        WebDriver driver = getDriver();
+        terminateApp(APP_ID);
+        //only activateApp didn't work
+        ((InteractsWithApps) getDriver()).activateApp(APP_ID);
 
-        if (driver instanceof InteractsWithApps) {
-            ((InteractsWithApps) driver).runAppInBackground(Duration.ofSeconds(5));
-        } else {
-            Assert.fail("Driver does not support app control.");
-        }
-
-        LoginPageBase loginPageAfterRestart = initPage(driver, LoginPageBase.class);
-        Assert.assertFalse(loginPageAfterRestart.isPageOpened(), "User is not logged in after reopening the app.");
+        Assert.assertFalse(productPage.isPageOpened(), "User was not logged out after app was reopened.");
     }
 }
