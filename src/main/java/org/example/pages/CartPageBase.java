@@ -1,9 +1,6 @@
 package org.example.pages;
 
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
-import java.util.List;
-
 
 public abstract class CartPageBase extends BasePage {
 

@@ -17,7 +17,6 @@ public class ReopenAppLogoutTest extends BaseTest implements IMobileUtils {
         ProductListPageBase productPage = loginAsStandardUser(true);
 
         terminateApp(APP_ID);
-        //only activateApp didn't work
         ((InteractsWithApps) getDriver()).activateApp(APP_ID);
 
         Assert.assertFalse(productPage.isPageOpened(), "User was not logged out after app was reopened.");

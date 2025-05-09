@@ -30,7 +30,6 @@ public class LoginPage extends LoginPageBase {
         if (!useAutoFilling) {
             return login(userType.getUsername(), userType.getPassword());
         }
-        // Można tu dodać alternatywny flow (np. wypełnianie formularza przez autofill systemowy)
         return login(userType.getUsername(), userType.getPassword());
     }
 

@@ -13,7 +13,7 @@ import org.example.pages.CartPageBase;
 import org.example.pages.ProductListPageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.time.Duration;
 import java.util.List;
@@ -39,25 +39,19 @@ public class ProductListItemPage extends ProductListPageBase implements IMobileU
     @ExtendedFindBy(accessibilityId = "test-Item title")
     private ExtendedWebElement firstProductTitle;
 
-    @ExtendedFindBy(accessibilityId = "test-Cart")
+    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.ImageView[1]")
     private TopMainMenuComponent topMenu;
+
+    @ExtendedFindBy(accessibilityId = "test-Item")
+    private List<ProductListItemComponent> productListItemComponents;
 
     public ProductListItemPage(WebDriver driver) {
         super(driver);
     }
 
-    private static final By PRODUCT_CONTAINER_LOCATOR = By.xpath("//android.view.ViewGroup[@content-desc='test-Item']");
-
-    private List<ProductListItemComponent> getProductListItems() {
-        List<WebElement> elements = getDriver().findElements(PRODUCT_CONTAINER_LOCATOR);
-        return elements.stream()
-                .map(el -> new ProductListItemComponent(getDriver(), el))
-                .collect(Collectors.toList());
-    }
-
     @Override
     public void removeProductFromCartByName(String productName) {
-        for (ProductListItemComponent product : getProductListItems()) {
+        for (ProductListItemComponent product : productListItemComponents) {
             if (product.getItemName().equalsIgnoreCase(productName)) {
                 product.clickRemoveFromCart();
                 break;
@@ -83,21 +77,21 @@ public class ProductListItemPage extends ProductListPageBase implements IMobileU
 
     @Override
     public List<String> getDisplayedProductNames() {
-        return getProductListItems().stream()
+        return productListItemComponents.stream()
                 .map(ProductListItemComponent::getItemName)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Double> getProductPrices() {
-        return getProductListItems().stream()
+        return productListItemComponents.stream()
                 .map(ProductListItemComponent::getItemPrice)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void addProductToCartByName(String productName) {
-        for (ProductListItemComponent product : getProductListItems()) {
+        for (ProductListItemComponent product : productListItemComponents) {
             if (normalize(product.getItemName()).contains(normalize(productName))) {
                 product.clickAddToCart();
                 break;
@@ -115,7 +109,7 @@ public class ProductListItemPage extends ProductListPageBase implements IMobileU
     @Override
     public void openProductByName(String productName) {
         waitForProductsToBePresent();
-        getProductListItems().stream()
+        productListItemComponents.stream()
                 .filter(product -> product.getItemName().equalsIgnoreCase(productName))
                 .findFirst()
                 .ifPresent(ProductListItemComponent::clickItemName);

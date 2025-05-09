@@ -4,7 +4,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.pages.CartPageBase;
 import org.example.pages.CheckoutPageBase;
 import org.openqa.selenium.WebDriver;
