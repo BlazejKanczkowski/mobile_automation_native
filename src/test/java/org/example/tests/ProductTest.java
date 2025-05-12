@@ -18,9 +18,10 @@ public class ProductTest extends BaseTest {
 
     @Test
     public void verifyRemovingProductFromCart() {
+        int EXPECTED_EMPTY_CART_COUNT = 0;
         ProductListPageBase productPage = loginAsStandardUser(true);
         productPage.addProductsToCart(List.of("Sauce Labs Backpack"));
         productPage.removeProductFromCartByName("Sauce Labs Backpack");
-        Assert.assertEquals(productPage.getCartCount(), 0, "Product not removed from cart.");
+        Assert.assertEquals(productPage.getCartCount(), EXPECTED_EMPTY_CART_COUNT, "Product not removed from cart.");
     }
 }

@@ -7,7 +7,7 @@ import org.example.pages.SideBarMenuPageBase;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = SideBarMenuPageBase.class)
-public class SideBarSideBarMenuPage extends SideBarMenuPageBase {
+public class SideBarMenuPage extends SideBarMenuPageBase {
 
     @ExtendedFindBy(accessibilityId = "test-Menu")
     private ExtendedWebElement menuButton;
@@ -18,7 +18,7 @@ public class SideBarSideBarMenuPage extends SideBarMenuPageBase {
     @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     private ExtendedWebElement logoutOption;
 
-    public SideBarSideBarMenuPage(WebDriver driver) {
+    public SideBarMenuPage(WebDriver driver) {
         super(driver);
     }
 

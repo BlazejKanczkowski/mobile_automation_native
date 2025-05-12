@@ -16,4 +16,6 @@ public abstract class CartPageBase extends BasePage {
 
     public abstract void scrollToCheckoutButton();
 
+    public abstract boolean checkIfVisibleInCart(String product);
+
 }

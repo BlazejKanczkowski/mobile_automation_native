@@ -21,11 +21,13 @@ public class CheckoutTest extends BaseTest {
         Assert.assertTrue(productPage.isProductListVisible(), "Product page not loaded.");
 
         productPage.addProductsToCart(products);
-        Assert.assertEquals(productPage.getCartCount(), products.size(), "Incorrect cart badge count.");
+        CartPageBase cartPage = productPage.clickCartIcon();
 
-        productPage.clickCartIcon();
+        int actualCartCount = productPage.getCartCount();
+        int expectedCartCount = products.size();
 
-        CartPageBase cartPage = getCartPage();
+        Assert.assertEquals(actualCartCount, expectedCartCount, "Cart count does not match added products");
+
         cartPage.scrollToCheckoutButton();
         Assert.assertTrue(cartPage.isCheckoutButtonPresent(), "Checkout button not found.");
         cartPage.clickCheckout();
@@ -37,6 +39,5 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertTrue(checkoutPageBase.isConfirmationDisplayed(), "Order confirmation not visible.");
 
-        //to do: implementing total price check using big decimal
     }
 }

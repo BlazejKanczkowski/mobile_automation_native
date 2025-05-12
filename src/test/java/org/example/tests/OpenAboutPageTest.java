@@ -1,6 +1,5 @@
 package org.example.tests;
 
-import org.example.enums.UserType;
 import org.example.pages.AboutPageBase;
 import org.example.utils.BaseTest;
 import org.testng.Assert;

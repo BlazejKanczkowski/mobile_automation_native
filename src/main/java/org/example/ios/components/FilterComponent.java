@@ -2,7 +2,7 @@ package org.example.ios.components;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractUIObject;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.enums.SortOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -13,9 +13,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+
 public class FilterComponent extends AbstractUIObject {
 
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name='test-Modal Selector Button']//XCUIElementTypeImage")
+    @ExtendedFindBy(accessibilityId = "test-Modal Selector Button")
     private ExtendedWebElement sortDropdown;
 
     public FilterComponent(WebDriver driver, SearchContext searchContext) {
@@ -26,7 +27,7 @@ public class FilterComponent extends AbstractUIObject {
         sortDropdown.click();
 
         String optionLocator = String.format(
-                "//XCUIElementTypeScrollView[@name='Selector container']//XCUIElementTypeStaticText[@name='%s']",
+                "//XCUIElementTypeStaticText[@label='%s']",
                 option.getVisibleText()
         );
 

@@ -2,6 +2,7 @@ package org.example.ios;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.pages.SideBarMenuPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -9,34 +10,34 @@ import org.openqa.selenium.support.FindBy;
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = SideBarMenuPageBase.class)
 public class SideBarMenuPage extends SideBarMenuPageBase {
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Menu']")
+    @ExtendedFindBy(accessibilityId = "test-Menu")
     private ExtendedWebElement menuButton;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-ABOUT']")
+    @ExtendedFindBy(accessibilityId = "test-ABOUT")
     private ExtendedWebElement aboutOption;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-LOGOUT']")
+    @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     private ExtendedWebElement logoutOption;
 
     public SideBarMenuPage(WebDriver driver) {
         super(driver);
     }
 
-    private void openMenuIfNeeded() {
-        if (!aboutOption.isElementPresent() || !logoutOption.isElementPresent()) {
-            menuButton.click();
-        }
-    }
-
     @Override
     public void openAboutPage() {
-        openMenuIfNeeded();
+        menuButton.click();
         aboutOption.click();
     }
 
     @Override
     public void logout() {
-        openMenuIfNeeded();
-        logoutOption.click();
+        menuButton.click();
+        logoutOption.clickIfPresent();
+    }
+
+    @Override
+    public boolean isPageOpened() {
+        return menuButton.isElementPresent();
     }
 }
+

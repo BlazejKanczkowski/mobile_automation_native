@@ -20,7 +20,7 @@ public class TopMainMenuComponent extends TopMainMenuComponentBase {
     }
 
     public void clickCartIcon() {
-        cartIcon.click();
+        tap(cartIcon);
     }
 
     public boolean isCartBadgePresent() {
@@ -28,7 +28,6 @@ public class TopMainMenuComponent extends TopMainMenuComponentBase {
     }
 
     public int getCartItemCount() {
-        clickCartIcon();
         return isCartBadgePresent() ? Integer.parseInt(cartBadge.getText()) : 0;
     }
 }

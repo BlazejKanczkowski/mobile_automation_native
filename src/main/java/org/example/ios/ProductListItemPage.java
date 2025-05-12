@@ -1,19 +1,17 @@
-package org.example.android;
+package org.example.ios;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.example.android.components.FilterComponent;
-import org.example.android.components.ProductListItemComponent;
-import org.example.android.components.TopMainMenuComponent;
 import org.example.components.TopMainMenuComponentBase;
+import org.example.ios.components.FilterComponent;
+import org.example.ios.components.ProductListItemComponent;
 import org.example.enums.SortOption;
+import org.example.ios.components.TopMainMenuComponent;
 import org.example.pages.CartPageBase;
 import org.example.pages.ProductListPageBase;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.time.Duration;
 import java.util.List;
@@ -21,8 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.example.utils.WaitUtil.waitUntilElementPresent;
 
-
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductListPageBase.class)
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductListPageBase.class)
 public class ProductListItemPage extends ProductListPageBase implements IMobileUtils {
 
     @ExtendedFindBy(accessibilityId = "test-PRODUCTS")

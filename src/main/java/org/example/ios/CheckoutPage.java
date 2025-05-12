@@ -3,30 +3,30 @@ package org.example.ios;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.example.pages.CheckoutPageBase;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CheckoutPageBase.class)
 public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
-    @FindBy(xpath = "//XCUIElementTypeTextField[@name='test-First Name']")
+    @ExtendedFindBy(accessibilityId = "test-First Name")
     private ExtendedWebElement firstNameField;
 
-    @FindBy(xpath = "//XCUIElementTypeTextField[@name='test-Last Name']")
+    @ExtendedFindBy(accessibilityId = "test-Last Name")
     private ExtendedWebElement lastNameField;
 
-    @FindBy(xpath = "//XCUIElementTypeTextField[@name='test-Zip/Postal Code']")
+    @ExtendedFindBy(accessibilityId = "test-Zip/Postal Code")
     private ExtendedWebElement postalCodeField;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-CONTINUE']")
+    @ExtendedFindBy(accessibilityId = "test-CONTINUE")
     private ExtendedWebElement continueButton;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-FINISH']")
+    @ExtendedFindBy(accessibilityId = "test-FINISH")
     private ExtendedWebElement finishButton;
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='THANK YOU FOR YOU ORDER']")
-    private ExtendedWebElement confirmationMessage;
+    @ExtendedFindBy(accessibilityId = "test-BACK HOME")
+    private ExtendedWebElement backHomeButton;
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -47,7 +47,7 @@ public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
 
     @Override
     public boolean isConfirmationDisplayed() {
-        return confirmationMessage.isElementPresent();
+        return backHomeButton.isElementPresent();
     }
 
     @Override
@@ -55,12 +55,13 @@ public class CheckoutPage extends CheckoutPageBase implements IMobileUtils {
         return finishButton.isElementPresent();
     }
 
+    public ExtendedWebElement getFinishButton() {
+        return finishButton;
+    }
+
     @Override
     public void scrollToFinishButton() {
         swipe(finishButton);
     }
-
-    public ExtendedWebElement getFinishButton() {
-        return finishButton;
-    }
 }
+

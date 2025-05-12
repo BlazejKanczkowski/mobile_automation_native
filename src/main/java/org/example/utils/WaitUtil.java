@@ -6,10 +6,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 public final class WaitUtil {
-
-    private WaitUtil() {
-    }
-
     public static void waitForVisibility(ExtendedWebElement element, Duration timeout) {
         element.waitUntil(ExpectedConditions.visibilityOf(element.getElement()), timeout);
     }
