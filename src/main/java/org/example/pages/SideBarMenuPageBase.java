@@ -12,6 +12,8 @@ public abstract class SideBarMenuPageBase extends BasePage {
 
     public abstract void logout();
 
+    public abstract void openDrawingPage();
+
     @Override
     public boolean isPageOpened() {
         return true;

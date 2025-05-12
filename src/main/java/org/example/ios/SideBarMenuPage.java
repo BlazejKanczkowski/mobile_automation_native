@@ -19,6 +19,9 @@ public class SideBarMenuPage extends SideBarMenuPageBase {
     @ExtendedFindBy(accessibilityId = "test-LOGOUT")
     private ExtendedWebElement logoutOption;
 
+    @ExtendedFindBy(accessibilityId = "test-DRAWING")
+    private ExtendedWebElement drawingOption;
+
     public SideBarMenuPage(WebDriver driver) {
         super(driver);
     }
@@ -33,6 +36,12 @@ public class SideBarMenuPage extends SideBarMenuPageBase {
     public void logout() {
         menuButton.click();
         logoutOption.clickIfPresent();
+    }
+
+    @Override
+    public void openDrawingPage() {
+        menuButton.click();
+        drawingOption.click();
     }
 
     @Override
